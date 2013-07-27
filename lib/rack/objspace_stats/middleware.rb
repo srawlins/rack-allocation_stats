@@ -19,8 +19,9 @@ module Rack::ObjspaceStats
     end
 
     def choose_action
-      request  = Rack::Request.new(@env)
+      request = Rack::Request.new(@env)
       if request.GET["ros"] && request.GET["ros"]["trace"]
+        @content_type = request.GET["ros"]["interactive"] ? "text/html" : "text/plain"
         TraceAllocations.new(@env, self)
       else
         CallAppDirectly.new(@env, self)
@@ -33,7 +34,7 @@ module Rack::ObjspaceStats
 
     def headers(body)
       {
-        "Content-Type"   => "text/plain",
+        "Content-Type"   => @content_type,
         "Content-Length" => body.inject(0) { |len, part| len + bytesize(part) }.to_s
       }
     end

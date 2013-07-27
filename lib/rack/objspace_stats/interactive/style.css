@@ -1,0 +1,77 @@
+body {
+  font-family: monospace;
+  font-size: 12px;
+}
+
+#everything {
+  display: table;
+  margin: 0 auto;
+}
+
+#controls {
+  background-color: #DDDDDD;
+  border: solid 1px #BBBBBB;
+  margin: 2px auto 8px;
+  width: 800px;
+  padding: 4px 2px;
+}
+
+#controls section {
+  background-color: #F8F8F8;
+  border: solid 1px #CCCCCC;
+  color: #333333;
+  border-radius: 4px;
+  display: inline-block;
+  margin: 0 4px;
+  padding: 2px 4px;
+}
+
+#controls section:hover {
+  background-color: #FFFFFF;
+  color: #000000;
+  border: solid 1px #BBBBBB;
+}
+
+#allocations th, #allocations td {
+  padding: 1px 4px;
+}
+
+.align-right {
+  text-align: right;
+}
+
+#allocations thead tr {
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+#allocations thead th {
+  border-bottom: solid 1px #999999;
+  font-size: 14px;
+}
+
+#allocations tbody tr:nth-child(even) {
+  background-color: #E8E8E8;
+  color: #333333;
+}
+#allocations tbody tr:nth-child(odd) {
+  background-color: #F8F8F8;
+  color: #333333;
+}
+
+#allocations tbody tr:hover {
+  background-color: #FFFFCC;
+  color: #000000;
+}
+
+#allocations tbody tr.footer {
+  background-color: #FFFFFF;
+  color: #000000;
+  font-weight: bold;
+}
+
+#allocations tbody tr.footer td {
+  border-top: solid 1px #999999;
+  padding-top: 3px 4px;
+}
+

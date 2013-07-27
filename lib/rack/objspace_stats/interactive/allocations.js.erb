@@ -1,0 +1,90 @@
+var allocations = <%= Yajl::Encoder.encode(allocations) %>
+var pwd         = "<%= Dir.pwd %>"
+
+$(function() {
+  fillTableWith(
+      _.sortBy(tupleize(_.groupBy(allocations, byFileLineAndClassPlus)), valueLength),
+      ["file", "line", "class+"]
+  );
+
+  $("#gb-controls input").change(refillTable);
+});
+
+function byFileLineAndClassPlus(allocation) {
+  return JSON.stringify([allocation["file"], allocation["line"], allocation["class_plus"]]);
+}
+
+function fillTableWith(groups, headers) {
+  /* table headers */
+  var head_tr = $("<tr/>");
+  for (i in headers) {
+    head_tr.append("<th>" + headers[i] + "</th>");
+  }
+  head_tr.append("<th>count</th>");
+  $("#allocations thead").html(head_tr);
+  $("#allocations tbody").empty();
+  var totalCount = 0;
+
+  for (var tuple in groups) {
+    var key    = groups[tuple][0];
+    var allocs = groups[tuple][1];
+    var tr = $("<tr/>");
+    keys = eval(key); /* unstringify */
+    for (var i in keys) {
+      tr.append($("<td>").text(keys[i]));
+    }
+
+    //count = groups[key].length;
+    count = allocs.length;
+    totalCount += count;
+    tr.append($("<td>").addClass("align-right").text(count));
+
+    $("#allocations tbody").append(tr);
+  }
+
+  var footerTr = $("<tr/>");
+  footerTr.
+      addClass("footer").
+      append('<td class="align-right" colspan="' + headers.length + '">total count</td>').
+      append('<td class="align-right">' + totalCount + "</td>").
+      appendTo($("#allocations tbody"));
+
+  $("#allocations-row-count").text(groups.length + " rows");
+}
+
+function groupByFields(list, fields) {
+  return _.groupBy(list, function(allocation) {
+    values = new Array();
+
+    for (i in fields) {
+      values.push(allocation[fields[i]]);
+    }
+    return JSON.stringify(values);
+  });
+}
+
+function refillTable(e) {
+  var gbInputs = $(e.target).parent("#gb-controls").find("input");
+  fields = new Array();
+
+  $.each(gbInputs, function(idx, gbInput) {
+    if (gbInput.checked) {
+      fields.push(gbInput.getAttribute("name"));
+    }
+  });
+
+  fillTableWith(_.sortBy(tupleize(groupByFields(allocations, fields)), valueLength), fields);
+}
+
+function tupleize(object) {
+  tuples = [];
+  for (var key in object) {
+    tuples.push([key, object[key]]);
+  }
+
+  return tuples;
+}
+
+function valueLength(tuple) {
+  return - tuple[1].length; /* descending */
+}

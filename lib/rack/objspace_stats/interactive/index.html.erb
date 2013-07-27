@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+<%= jquery_min_js %>
+    </script>
+
+    <script>
+<%= underscore_min_js %>
+    </script>
+
+    <script>
+<%= allocations_js %>
+    </script>
+
+    <style>
+<%= style_css %>
+    </style>
+  </head>
+  <body>
+    <main id="everything">
+      <h1>Rack::ObjspaceStats</h1>
+
+      <section id="controls">
+        <section id="gb-controls">
+          group by <input type="checkbox" id="gb-file" name="file" checked="checked"></input> file
+          <input type="checkbox" id="gb-line" name="line" checked="checked"></input> line
+          <input type="checkbox" id="gb-class" name="class"></input> class
+          <input type="checkbox" id="gb-class-plus" name="class_plus" checked="checked"></input> class+
+          <input type="checkbox" id="gb-method-id" name="method_id"></input> method id
+        </section>
+
+        <section id="filter-controls">
+          filter out <input type="checkbox" id="filter-ruby" name="filter-ruby"></input> ruby
+          <input type="checkbox" id="filter-gems" name="filter-gems"></input> gems
+          <input type="checkbox" id="filter-pwd" name="filter-pwd"></input> project (PWD)
+        </section>
+      </section>
+
+      <table id="allocations" cellpadding="0" cellspacing="0">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+      <div id="allocations-row-count"></div>
+    </main>
+  </body>
+</html>
