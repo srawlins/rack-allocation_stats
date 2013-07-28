@@ -3,11 +3,12 @@ var pwd         = "<%= Dir.pwd %>"
 
 $(function() {
   fillTableWith(
-      _.sortBy(tupleize(_.groupBy(allocations, byFileLineAndClassPlus)), valueLength),
+      _.sortBy(tupleize(_.groupBy(filterAllocationsByControls(), byFileLineAndClassPlus)), valueLength),
       ["file", "line", "class+"]
   );
 
   $("#gb-controls input").change(refillTable);
+  $("#filter-controls input").change(refillTable);
 });
 
 function byFileLineAndClassPlus(allocation) {
@@ -34,7 +35,6 @@ function fillTableWith(groups, headers) {
       tr.append($("<td>").text(keys[i]));
     }
 
-    //count = groups[key].length;
     count = allocs.length;
     totalCount += count;
     tr.append($("<td>").addClass("align-right").text(count));
@@ -63,8 +63,47 @@ function groupByFields(list, fields) {
   });
 }
 
+function filterOutPwd(filtered) {
+ return $.grep(filtered, function(a) {
+   var r = new RegExp(pwd);
+   return r.exec(a["file"]) === null;
+ });
+}
+
+function filterOutRuby(filtered) {
+ return $.grep(filtered, function(a) {
+   var r = new RegExp("<RUBYLIBDIR>");
+   return r.exec(a["file"]) === null;
+ });
+}
+
+function filterOutEval(filtered) {
+ return $.grep(filtered, function(a) {
+   return a["file"] !== "(eval)";
+ });
+}
+
+function filterAllocationsByControls() {
+  var filtered = allocations;
+  if ($("#filter-pwd")[0].checked) {
+    filtered = filterOutPwd(filtered);
+  }
+  if ($("#filter-ruby")[0].checked) {
+    filtered = filterOutRuby(filtered);
+  }
+  if ($("#filter-eval")[0].checked) {
+    filtered = filterOutEval(filtered);
+  }
+
+  return filtered;
+}
+
 function refillTable(e) {
-  var gbInputs = $(e.target).parent("#gb-controls").find("input");
+  // Filter stuff
+  filtered = filterAllocationsByControls();
+
+  // Group stuff by other stuff
+  var gbInputs = $("#gb-controls").find("input");
   fields = new Array();
 
   $.each(gbInputs, function(idx, gbInput) {
@@ -73,7 +112,7 @@ function refillTable(e) {
     }
   });
 
-  fillTableWith(_.sortBy(tupleize(groupByFields(allocations, fields)), valueLength), fields);
+  fillTableWith(_.sortBy(tupleize(groupByFields(filtered, fields)), valueLength), fields);
 }
 
 function tupleize(object) {
