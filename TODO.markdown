@@ -4,7 +4,6 @@ Interactive Mode
 2. group by custom
 3. filter out gems
 4. filter out specific gem
-5. combine file and line columns
 6. linkify ruby code
 7. sorting ability
 8. minimum count

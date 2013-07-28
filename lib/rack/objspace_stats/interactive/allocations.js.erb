@@ -17,12 +17,38 @@ function byFileLineAndClassPlus(allocation) {
 
 function fillTableWith(groups, headers) {
   /* table headers */
-  var head_tr = $("<tr/>");
+  var headTr = $("<tr/>");
+  var fileColonLineIndex = null;
+  var lineIndex = null;
+  var classPathSpaceMethodIdIndex = null;
+  var methodIdIndex = null;
   for (i in headers) {
-    head_tr.append("<th>" + headers[i] + "</th>");
+    /* i is not an integer; the first i plus 1 is "01" */
+    if (headers[i] === "file" && headers[i*1 + 1] === "line") {
+      fileColonLineIndex = i;
+      headers[i] = "file:line";
+    }
+
+    if (fileColonLineIndex && headers[i] === "line") {
+      lineIndex = i;
+      continue;
+    }
+
+    /* i is not an integer; the first i plus 1 is "01" */
+    if (headers[i] === "class_path" && headers[i*1 + 1] === "method_id") {
+      classPathSpaceMethodIdIndex = i;
+      headers[i] = "class_path:method_id";
+    }
+
+    if (classPathSpaceMethodIdIndex && headers[i] === "method_id") {
+      methodIdIndex = i;
+      continue;
+    }
+
+    headTr.append("<th>" + headers[i] + "</th>");
   }
-  head_tr.append("<th>count</th>");
-  $("#allocations thead").html(head_tr);
+  headTr.append("<th>count</th>");
+  $("#allocations thead").html(headTr);
   $("#allocations tbody").empty();
   var totalCount = 0;
 
@@ -32,7 +58,16 @@ function fillTableWith(groups, headers) {
     var tr = $("<tr/>");
     keys = eval(key); /* unstringify */
     for (var i in keys) {
-      tr.append($("<td>").text(keys[i]));
+      if (fileColonLineIndex          && i === lineIndex)     { continue; }
+      if (classPathSpaceMethodIdIndex && i === methodIdIndex) { continue; }
+
+      if (i === fileColonLineIndex) {
+        tr.append($("<td>").text(keys[i] + ":" + keys[lineIndex]));
+      } else if (i === classPathSpaceMethodIdIndex) {
+        tr.append($("<td>").text(keys[i] + " " + keys[methodIdIndex]));
+      } else {
+        tr.append($("<td>").text(keys[i]));
+      }
     }
 
     count = allocs.length;
