@@ -9,6 +9,7 @@ $(function() {
 
   $("#gb-controls input").change(refillTable);
   $("#filter-controls input").change(refillTable);
+  $("#filter-count").change(refillTable);
 });
 
 function byFileLineAndClassPlus(allocation) {
@@ -37,7 +38,7 @@ function fillTableWith(groups, headers) {
     /* i is not an integer; the first i plus 1 is "01" */
     if (headers[i] === "class_path" && headers[i*1 + 1] === "method_id") {
       classPathSpaceMethodIdIndex = i;
-      headers[i] = "class_path:method_id";
+      headers[i] = "class_path method_id";
     }
 
     if (classPathSpaceMethodIdIndex && headers[i] === "method_id") {
@@ -47,6 +48,10 @@ function fillTableWith(groups, headers) {
 
     headTr.append("<th>" + headers[i] + "</th>");
   }
+
+  if (lineIndex)     { headers.splice(lineIndex, 1); }
+  if (methodIdIndex) { headers.splice(methodIdIndex, 1); }
+
   headTr.append("<th>count</th>");
   $("#allocations thead").html(headTr);
   $("#allocations tbody").empty();
@@ -64,7 +69,9 @@ function fillTableWith(groups, headers) {
       if (i === fileColonLineIndex) {
         tr.append($("<td>").text(keys[i] + ":" + keys[lineIndex]));
       } else if (i === classPathSpaceMethodIdIndex) {
-        tr.append($("<td>").text(keys[i] + " " + keys[methodIdIndex]));
+        var class_path_html = '<span class="nc">' + keys[i] + '</span>';
+        var method_id_html  = '<span class="nf">' + keys[methodIdIndex] + '</span>';
+        tr.append($("<td>").html(class_path_html + " " + method_id_html));
       } else {
         tr.append($("<td>").text(keys[i]));
       }
@@ -85,17 +92,6 @@ function fillTableWith(groups, headers) {
       appendTo($("#allocations tbody"));
 
   $("#allocations-row-count").text(groups.length + " rows");
-}
-
-function groupByFields(list, fields) {
-  return _.groupBy(list, function(allocation) {
-    values = new Array();
-
-    for (i in fields) {
-      values.push(allocation[fields[i]]);
-    }
-    return JSON.stringify(values);
-  });
 }
 
 function filterOutPwd(filtered) {
@@ -133,6 +129,21 @@ function filterAllocationsByControls() {
   return filtered;
 }
 
+function groupByFields(list, fields) {
+  return _.groupBy(list, function(allocation) {
+    values = new Array();
+
+    for (i in fields) {
+      values.push(allocation[fields[i]]);
+    }
+    return JSON.stringify(values);
+  });
+}
+
+function minCount(allocations) {
+  return allocations.length > $("#filter-count").val();
+}
+
 function refillTable(e) {
   // Filter stuff
   filtered = filterAllocationsByControls();
@@ -147,12 +158,13 @@ function refillTable(e) {
     }
   });
 
-  fillTableWith(_.sortBy(tupleize(groupByFields(filtered, fields)), valueLength), fields);
+  fillTableWith(_.sortBy(tupleize(groupByFields(filtered, fields), minCount), valueLength), fields);
 }
 
-function tupleize(object) {
+function tupleize(object, filter) {
   tuples = [];
   for (var key in object) {
+    if (! minCount(object[key])) { continue; }
     tuples.push([key, object[key]]);
   }
 

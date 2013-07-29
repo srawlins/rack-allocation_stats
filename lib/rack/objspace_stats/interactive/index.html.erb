@@ -6,6 +6,10 @@
     </script>
 
     <script>
+<%= jquery_ui_min_js %>
+    </script>
+
+    <script>
 <%= underscore_min_js %>
     </script>
 
@@ -14,8 +18,24 @@
     </script>
 
     <style>
+<%= jquery_ui_min_css %>
+    </style>
+
+    <style>
 <%= style_css %>
     </style>
+
+    <script>
+$(function() {
+  $("#filter-count").spinner({
+    spin: function(event, ui) {
+      if (ui.value < 0 ) { $(this).spinner("value", 0); return false; }
+    },
+    change: refillTable,
+    stop: refillTable
+  });
+});
+    </script>
   </head>
   <body>
     <main id="everything">
@@ -36,6 +56,12 @@
           <input type="checkbox" id="filter-gems" name="filter-gems"></input> gems
           <input type="checkbox" id="filter-pwd" name="filter-pwd"></input> project (PWD)
           <input type="checkbox" id="filter-eval" name="filter-eval" checked="checked"></input> (eval)
+        </section>
+
+        <section id="filter-controls">
+          only groups with at least
+          <input type="text" id="filter-count" name="filter-count" value="0" />
+          allocations
         </section>
       </section>
 

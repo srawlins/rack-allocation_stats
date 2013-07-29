@@ -6,9 +6,9 @@ Interactive Mode
 4. filter out specific gem
 6. linkify ruby code
 7. sorting ability
-8. minimum count
 9. count pct
 10. test with jasmine?
+11. convert to SCSS
 
 Output
 ======

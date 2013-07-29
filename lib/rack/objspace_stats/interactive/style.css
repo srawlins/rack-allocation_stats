@@ -75,3 +75,39 @@ body {
   padding-top: 3px 4px;
 }
 
+.nc {
+  color: #445588;
+  font-weight: bold;
+}
+
+.nf {
+  color: #990000;
+  font-weight: bold;
+}
+
+/* jQuery UI hacks in lieu of a theme with images */
+.ui-spinner-input {
+  text-align: right;
+  width: 30px;
+}
+
+.ui-spinner {
+  border: solid 1px #CCC;
+  border-radius: 4px;
+}
+
+.ui-spinner-up {
+  background-color: #DDD;
+}
+
+.ui-spinner-up:hover {
+  background-color: #FFC;
+}
+
+.ui-spinner-down {
+  background-color: #EEE;
+}
+
+.ui-spinner-down:hover {
+  background-color: #FFC;
+}

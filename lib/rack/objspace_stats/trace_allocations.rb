@@ -83,11 +83,13 @@ module Rack::ObjspaceStats
 
     def build_html_body(allocations)
       index_html_erb     = ERB.new(File.read(File.join(__dir__, "interactive", "index.html.erb")))
-      jquery_min_js      = File.read(File.join(__dir__, "interactive", "jquery-2.0.3.min.js"))
-      underscore_min_js  = File.read(File.join(__dir__, "interactive", "underscore-min.js"))
+      jquery_min_js      =         File.read(File.join(__dir__, "interactive", "jquery-2.0.3.min.js"))
+      jquery_ui_min_js   =         File.read(File.join(__dir__, "interactive", "jquery-ui-1.10.3.custom.min.js"))
+      underscore_min_js  =         File.read(File.join(__dir__, "interactive", "underscore-min.js"))
       allocations_js_erb = ERB.new(File.read(File.join(__dir__, "interactive", "allocations.js.erb")))
       allocations_js     = allocations_js_erb.result(binding)
-      style_css          = File.read(File.join(__dir__, "interactive", "style.css"))
+      jquery_ui_min_css  =         File.read(File.join(__dir__, "interactive", "jquery-ui-1.10.3.custom.min.css"))
+      style_css          =         File.read(File.join(__dir__, "interactive", "style.css"))
 
       html_body = index_html_erb.result(binding)
       return [html_body]
