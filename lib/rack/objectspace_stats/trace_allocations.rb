@@ -1,6 +1,6 @@
 require 'yajl'
 
-module Rack::ObjspaceStats
+module Rack::ObjectSpaceStats
   class TraceAllocations < Action
     include Rack::Utils
 
@@ -40,12 +40,12 @@ module Rack::ObjspaceStats
       end
 
       if @interactive
-        @middleware.objspace_stats_response(build_html_body(allocations.all))
+        @middleware.objectspace_stats_response(build_html_body(allocations.all))
       else
         allocations = allocations.
           group_by(:@sourcefile, :@sourceline, :class_plus).
           sorted_by_size.all
-        @middleware.objspace_stats_response(build_text_body(allocations))
+        @middleware.objectspace_stats_response(build_text_body(allocations))
       end
     end
 

@@ -1,4 +1,4 @@
-module Rack::ObjspaceStats
+module Rack::ObjectSpaceStats
   class Middleware
     include Rack::Utils
 
@@ -28,7 +28,7 @@ module Rack::ObjspaceStats
       end
     end
 
-    def objspace_stats_response(body)
+    def objectspace_stats_response(body)
       [200, headers(body), Array(body)]
     end
 

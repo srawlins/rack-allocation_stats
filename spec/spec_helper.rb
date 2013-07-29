@@ -1,6 +1,7 @@
-require_relative "../lib/rack/objspace_stats"
+require_relative "../lib/rack/objectspace_stats"
 require_relative "hello_world_app"
 require_relative "yaml_app"
+require_relative "yajl_app"
 
 if RbConfig::CONFIG["MAJOR"].to_i < 2 || RbConfig::CONFIG["MINOR"].to_i < 1
   warn "Error: ObjectStats requires Ruby 2.1 or greater"

@@ -1,4 +1,4 @@
-module Rack::ObjspaceStats
+module Rack::ObjectSpaceStats
   class Action
     def initialize(env, middleware)
       @env = env

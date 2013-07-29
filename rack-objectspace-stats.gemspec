@@ -1,5 +1,5 @@
 Gem::Specification.new do |spec|
-  spec.name          = "rack-objspace-stats"
+  spec.name          = "rack-objectspace-stats"
   spec.version       = "0.1.0"
   spec.authors       = ["Sam Rawlins"]
   spec.email         = ["sam.rawlins@gmail.com"]
@@ -11,6 +11,6 @@ Gem::Specification.new do |spec|
   spec.files         = `find . -path "*.rb"`.split("\n")
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "objspace-stats"
+  spec.add_dependency "objectspace-stats"
   spec.add_development_dependency "rspec"
 end

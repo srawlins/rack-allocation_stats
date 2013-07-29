@@ -1,5 +1,5 @@
 require "./spec/yaml_app"
-require "./lib/rack/objspace_stats"
+require "./lib/rack/objectspace_stats"
 
-use Rack::ObjspaceStats
+use Rack::ObjectSpaceStats
 run YamlApp.new

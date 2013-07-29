@@ -1,4 +1,4 @@
-module Rack::ObjspaceStats
+module Rack::ObjectSpaceStats
   class CallAppDirectly < Action
     def act
       @result = @middleware.call_app(@env)
