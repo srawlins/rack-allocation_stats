@@ -85,10 +85,14 @@ body {
   font-weight: bold;
 }
 
+input[type='checkbox'] {
+  margin: 0.2em 0;
+}
+
 /* jQuery UI hacks in lieu of a theme with images */
 .ui-spinner-input {
   text-align: right;
-  width: 30px;
+  width: 24px;
 }
 
 .ui-spinner {

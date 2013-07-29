@@ -141,7 +141,7 @@ function groupByFields(list, fields) {
 }
 
 function minCount(allocations) {
-  return allocations.length > $("#filter-count").val();
+  return allocations.length >= $("#filter-count").val();
 }
 
 function refillTable(e) {
