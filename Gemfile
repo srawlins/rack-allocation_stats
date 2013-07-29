@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "objspace-stats", path: "../objspace-stats"
+gem "objectspace-stats", path: "../objectspace-stats"
 gem "rack"
 gem "yajl-ruby", "= 1.1.0"
 

@@ -1,7 +1,7 @@
 PATH
-  remote: ../objspace-stats
+  remote: ../objectspace-stats
   specs:
-    objspace-stats (0.1.0)
+    objectspace-stats (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -22,7 +22,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  objspace-stats!
+  objectspace-stats!
   rack
   rspec
   yajl-ruby (= 1.1.0)
