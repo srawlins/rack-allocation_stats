@@ -2,7 +2,6 @@ Interactive Mode
 ================
 
 2. group by custom
-3. filter out gems
 4. filter out specific gem
 6. linkify ruby code
 7. sorting ability
