@@ -91,6 +91,8 @@ module Rack::ObjectSpaceStats
       jquery_ui_min_css  =         File.read(File.join(__dir__, "interactive", "jquery-ui-1.10.3.custom.min.css"))
       style_css          =         File.read(File.join(__dir__, "interactive", "style.css"))
 
+      allocating_gems = ["no gems allocated any objects"]
+
       html_body = index_html_erb.result(binding)
       return [html_body]
     end

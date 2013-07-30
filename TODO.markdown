@@ -1,7 +1,9 @@
 Interactive Mode
 ================
 
+1. display all ros[] parameters
 2. group by custom
+3. option to divide counts by ros[times]
 4. filter out specific gem
 6. linkify ruby code
 7. sorting ability
