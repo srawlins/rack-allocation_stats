@@ -23,6 +23,17 @@ function fillTableWith(groups, headers) {
   var lineIndex = null;
   var classPathSpaceMethodIdIndex = null;
   var methodIdIndex = null;
+
+  if (groups.length === 0) {
+    $("#allocations thead").empty();
+    $("#allocations tbody").empty();
+    $("#allocations-row-count").text("0 rows");
+    if (allocations.length > 0) {
+      $("#allocations-row-count").text("0 rows (all of the original " + allocations.length + " allocations have been filtered out.)");
+    }
+    return;
+  }
+
   for (i in headers) {
     /* i is not an integer; the first i plus 1 is "01" */
     if (headers[i] === "file" && headers[i*1 + 1] === "line") {
@@ -108,6 +119,13 @@ function filterOutRuby(filtered) {
  });
 }
 
+function filterOutGems(filtered) {
+ return $.grep(filtered, function(a) {
+   var r = new RegExp("<GEMDIR>");
+   return r.exec(a["file"]) === null;
+ });
+}
+
 function filterOutEval(filtered) {
  return $.grep(filtered, function(a) {
    return a["file"] !== "(eval)";
@@ -119,9 +137,15 @@ function filterAllocationsByControls() {
   if ($("#filter-pwd")[0].checked) {
     filtered = filterOutPwd(filtered);
   }
+
   if ($("#filter-ruby")[0].checked) {
     filtered = filterOutRuby(filtered);
   }
+
+  if ($("#filter-gems")[0].checked) {
+    filtered = filterOutGems(filtered);
+  }
+
   if ($("#filter-eval")[0].checked) {
     filtered = filterOutEval(filtered);
   }
