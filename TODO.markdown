@@ -5,9 +5,10 @@ Interactive Mode
 2. group by custom
 3. option to divide counts by ros[times]
 4. filter out specific gem
+5. add sinatra example / spec
 6. linkify ruby code
 7. sorting ability
-9. count pct
+9. count pct choice
 10. test with jasmine?
 11. convert to SCSS
 

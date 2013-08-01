@@ -68,6 +68,7 @@ function fillTableWith(groups, headers) {
   $("#allocations tbody").empty();
   var totalCount = 0;
 
+  var showPercent = true;
   for (var tuple in groups) {
     var key    = groups[tuple][0];
     var allocs = groups[tuple][1];
@@ -90,16 +91,32 @@ function fillTableWith(groups, headers) {
 
     count = allocs.length;
     totalCount += count;
-    tr.append($("<td>").addClass("align-right").text(count));
+    if (showPercent) {
+      pct = (count/allocations.length*100).toFixed(2);
+      if (pct < 10) { pct = " " + pct; }
+      tr.append($("<td>").addClass("align-right").text(count + " (" + pct + "%)"));
+    } else {
+      tr.append($("<td>").addClass("align-right").text(count));
+    }
 
     $("#allocations tbody").append(tr);
   }
 
-  var footerTr = $("<tr/>");
-  footerTr.
+  if (showPercent) {
+    pct = (totalCount/allocations.length*100).toFixed(2);
+    if (pct < 10) { pct = " " + pct; }
+  }
+  $("<tr/>").
       addClass("footer").
+      addClass("total").
       append('<td class="align-right" colspan="' + headers.length + '">total count</td>').
-      append('<td class="align-right">' + totalCount + "</td>").
+      append('<td class="align-right">' + totalCount + " (" + pct + "%)" + "</td>").
+      appendTo($("#allocations tbody"));
+
+  var filtered = allocations.length - totalCount;
+  $("<tr/>").
+      addClass("footer").
+      append('<td class="align-right" colspan="' + (headers.length+1) + '">(' + filtered + ' more have been filtered out)</td>').
       appendTo($("#allocations tbody"));
 
   $("#allocations-row-count").text(groups.length + " rows");

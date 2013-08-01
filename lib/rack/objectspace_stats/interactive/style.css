@@ -67,12 +67,15 @@ body {
 #allocations tbody tr.footer {
   background-color: #FFFFFF;
   color: #000000;
+}
+
+#allocations tbody tr.total {
   font-weight: bold;
 }
 
-#allocations tbody tr.footer td {
+#allocations tbody tr.total td {
   border-top: solid 1px #999999;
-  padding-top: 3px 4px;
+  padding: 3px 4px 1px;
 }
 
 .nc {
