@@ -1,3 +1,5 @@
+1. README
+
 Interactive Mode
 ================
 
