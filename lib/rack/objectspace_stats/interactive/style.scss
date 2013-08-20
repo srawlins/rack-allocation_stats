@@ -1,0 +1,129 @@
+/* Copyright 2013 Google Inc. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0, found in the LICENSE file.
+ */
+
+$bg: #FFFFFF;
+
+body {
+  font-family: monospace;
+  font-size: 12px;
+}
+
+#everything {
+  display: table;
+  margin: 0 auto;
+}
+
+#controls {
+  background-color: darken($bg, 13.33%);
+  border: solid 1px darken($bg, 26.67%);
+  margin: 2px auto 8px;
+  width: 800px;
+  padding: 4px 2px;
+
+  section {
+    background-color: #F8F8F8;
+    border: solid 1px darken($bg, 20%);
+    color: #333333;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 2px 4px;
+    padding: 2px 4px;
+  }
+
+  section:hover {
+    background-color: $bg;
+    color: #000000;
+    border: solid 1px darken($bg, 26.67%);
+  }
+}
+
+.align-right {
+  text-align: right;
+}
+
+#allocations {
+  th, td {
+    padding: 1px 4px;
+  }
+
+  thead tr {
+    background-color: $bg;
+    color: #000000;
+  }
+
+  thead th {
+    border-bottom: solid 1px #999999;
+    font-size: 14px;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #E8E8E8;
+    color: #333333;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: #F8F8F8;
+    color: #333333;
+  }
+
+  tbody tr:hover {
+    background-color: #FFFFCC;
+    color: #000000;
+  }
+
+  tbody tr.footer {
+    background-color: $bg;
+    color: #000000;
+  }
+
+  tbody tr.total {
+    font-weight: bold;
+  }
+
+  tbody tr.total td {
+    border-top: solid 1px #999999;
+    padding: 3px 4px 1px;
+  }
+}
+
+.nc {
+  color: #445588;
+  font-weight: bold;
+}
+
+.nf {
+  color: #990000;
+  font-weight: bold;
+}
+
+input[type='checkbox'] {
+  margin: 0.2em 0;
+}
+
+/* jQuery UI hacks in lieu of a theme with images */
+.ui-spinner-input {
+  text-align: right;
+  width: 24px;
+}
+
+.ui-spinner {
+  border: solid 1px #CCCCCC;
+  border-radius: 4px;
+}
+
+.ui-spinner-up {
+  background-color: #DDDDDD;
+}
+
+.ui-spinner-up:hover {
+  background-color: #FFFFCC;
+}
+
+.ui-spinner-down {
+  background-color: #EEEEEE;
+}
+
+.ui-spinner-down:hover {
+  background-color: #FFFFCC;
+}

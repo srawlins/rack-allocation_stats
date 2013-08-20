@@ -1,124 +1,90 @@
 /* Copyright 2013 Google Inc. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0, found in the LICENSE file.
  */
-
 body {
   font-family: monospace;
-  font-size: 12px;
-}
+  font-size: 12px; }
 
 #everything {
   display: table;
-  margin: 0 auto;
-}
+  margin: 0 auto; }
 
 #controls {
-  background-color: #DDDDDD;
-  border: solid 1px #BBBBBB;
+  background-color: #dddddd;
+  border: solid 1px #bbbbbb;
   margin: 2px auto 8px;
   width: 800px;
-  padding: 4px 2px;
-}
-
-#controls section {
-  background-color: #F8F8F8;
-  border: solid 1px #CCCCCC;
-  color: #333333;
-  border-radius: 4px;
-  display: inline-block;
-  margin: 2px 4px;
-  padding: 2px 4px;
-}
-
-#controls section:hover {
-  background-color: #FFFFFF;
-  color: #000000;
-  border: solid 1px #BBBBBB;
-}
-
-#allocations th, #allocations td {
-  padding: 1px 4px;
-}
+  padding: 4px 2px; }
+  #controls section {
+    background-color: #F8F8F8;
+    border: solid 1px #cccccc;
+    color: #333333;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 2px 4px;
+    padding: 2px 4px; }
+  #controls section:hover {
+    background-color: white;
+    color: #000000;
+    border: solid 1px #bbbbbb; }
 
 .align-right {
-  text-align: right;
-}
+  text-align: right; }
 
+#allocations th, #allocations td {
+  padding: 1px 4px; }
 #allocations thead tr {
-  background-color: #FFFFFF;
-  color: #000000;
-}
-
+  background-color: white;
+  color: #000000; }
 #allocations thead th {
   border-bottom: solid 1px #999999;
-  font-size: 14px;
-}
-
+  font-size: 14px; }
 #allocations tbody tr:nth-child(even) {
   background-color: #E8E8E8;
-  color: #333333;
-}
+  color: #333333; }
 #allocations tbody tr:nth-child(odd) {
   background-color: #F8F8F8;
-  color: #333333;
-}
-
+  color: #333333; }
 #allocations tbody tr:hover {
   background-color: #FFFFCC;
-  color: #000000;
-}
-
+  color: #000000; }
 #allocations tbody tr.footer {
-  background-color: #FFFFFF;
-  color: #000000;
-}
-
+  background-color: white;
+  color: #000000; }
 #allocations tbody tr.total {
-  font-weight: bold;
-}
-
+  font-weight: bold; }
 #allocations tbody tr.total td {
   border-top: solid 1px #999999;
-  padding: 3px 4px 1px;
-}
+  padding: 3px 4px 1px; }
 
 .nc {
   color: #445588;
-  font-weight: bold;
-}
+  font-weight: bold; }
 
 .nf {
   color: #990000;
-  font-weight: bold;
-}
+  font-weight: bold; }
 
 input[type='checkbox'] {
-  margin: 0.2em 0;
-}
+  margin: 0.2em 0; }
 
 /* jQuery UI hacks in lieu of a theme with images */
 .ui-spinner-input {
   text-align: right;
-  width: 24px;
-}
+  width: 24px; }
 
 .ui-spinner {
-  border: solid 1px #CCC;
-  border-radius: 4px;
-}
+  border: solid 1px #CCCCCC;
+  border-radius: 4px; }
 
 .ui-spinner-up {
-  background-color: #DDD;
-}
+  background-color: #DDDDDD; }
 
 .ui-spinner-up:hover {
-  background-color: #FFC;
-}
+  background-color: #FFFFCC; }
 
 .ui-spinner-down {
-  background-color: #EEE;
-}
+  background-color: #EEEEEE; }
 
 .ui-spinner-down:hover {
-  background-color: #FFC;
-}
+  background-color: #FFFFCC; }

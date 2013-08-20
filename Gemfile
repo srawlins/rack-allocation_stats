@@ -15,4 +15,6 @@ group :test do
   gem "redcarpet"
   gem "sinatra"
   gem "slim"
+
+  gem "sass"
 end
