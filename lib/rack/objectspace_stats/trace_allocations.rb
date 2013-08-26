@@ -30,15 +30,15 @@ module Rack::ObjectSpaceStats
       if @scope
         if @scope == "."
           allocations = @stats.allocations.from_pwd#.
-            #group_by(:@sourcefile, :@sourceline, :class_plus).
+            #group_by(:sourcefile, :sourceline, :class_plus).
             #sorted_by_size.all
         else
           allocations = @stats.allocations.from(@scope)#.
-            #group_by(:@sourcefile, :@sourceline, :class_plus).
+            #group_by(:sourcefile, :sourceline, :class_plus).
             #sorted_by_size.all
         end
       else
-        allocations = @stats.allocations#.group_by(:@sourcefile, :@sourceline, :class_plus).
+        allocations = @stats.allocations#.group_by(:sourcefile, :sourceline, :class_plus).
           #sorted_by_size.all
       end
 
@@ -46,7 +46,7 @@ module Rack::ObjectSpaceStats
         @middleware.objectspace_stats_response(build_html_body(allocations.all))
       else
         allocations = allocations.
-          group_by(:@sourcefile, :@sourceline, :class_plus).
+          group_by(:sourcefile, :sourceline, :class_plus).
           sorted_by_size.all
         @middleware.objectspace_stats_response(build_text_body(allocations))
       end
