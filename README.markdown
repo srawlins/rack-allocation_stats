@@ -6,4 +6,10 @@ request.
 API
 ===
 
-TODO
+In order to trigger rack-objectspace-stats, a parameter must be appended to the
+request URL: `ros[trace]=true` ('ros' for rack-objectspace-stats). Alongside
+that, the following parameters are also available:
+
+* `ros[scope]`
+* `ros[times]`
+* `ros[interactive]`
