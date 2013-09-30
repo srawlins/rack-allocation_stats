@@ -14,7 +14,7 @@ module Rack::ObjectSpaceStats
       @scope       = request.GET["ros"]["scope"]
       @times       = (request.GET["ros"]["times"] || 1).to_i
       @gc_report   = request.GET["ros"]["gc_report"]
-      @interactive = request.GET["ros"]["interactive"]
+      @output      = (request.GET["ros"]["output"] || :columnar).to_sym
       @new_env = delete_custom_params(@env)
     end
 
@@ -42,7 +42,7 @@ module Rack::ObjectSpaceStats
           #sorted_by_size.all
       end
 
-      if @interactive
+      if @output == :interactive
         @middleware.objectspace_stats_response(build_html_body(allocations.all))
       else
         allocations = allocations.

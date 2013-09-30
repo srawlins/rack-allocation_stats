@@ -94,7 +94,7 @@ describe Rack::ObjectSpaceStats do
   end
 
   it "should return HTML5 in response to an interactive request" do
-    interactive_request_env  = Rack::MockRequest.env_for("/", :params => "ros[trace]=true&ros[interactive]=true")
+    interactive_request_env  = Rack::MockRequest.env_for("/", :params => "ros[trace]=true&ros[output]=interactive")
     _, _, body = Rack::ObjectSpaceStats.new(@app).call(interactive_request_env)
 
     expect(body[0]).to match /^<!DOCTYPE html>/

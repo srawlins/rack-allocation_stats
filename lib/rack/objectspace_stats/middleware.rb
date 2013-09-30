@@ -24,7 +24,7 @@ module Rack::ObjectSpaceStats
     def choose_action
       request = Rack::Request.new(@env)
       if request.GET["ros"] && request.GET["ros"]["trace"]
-        @content_type = request.GET["ros"]["interactive"] ? "text/html" : "text/plain"
+        @content_type = request.GET["ros"]["output"] == "interactive" ? "text/html" : "text/plain"
         TraceAllocations.new(@env, self)
       else
         CallAppDirectly.new(@env, self)
