@@ -3,7 +3,7 @@
 
 source "https://rubygems.org"
 
-gem "objectspace-stats", path: "../objectspace-stats"
+gem "allocation_stats", path: "../allocation_stats"
 gem "rack"
 gem "yajl-ruby", "= 1.1.0"
 

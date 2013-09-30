@@ -3,14 +3,14 @@
 
 require "bundler/setup"
 require "rack"
-require "objectspace/stats"
+require "allocation_stats"
 
-require_relative "objectspace_stats/action"
-require_relative "objectspace_stats/call_app_directly"
-require_relative "objectspace_stats/middleware"
-require_relative "objectspace_stats/trace_allocations"
+require_relative "allocation_stats/action"
+require_relative "allocation_stats/call_app_directly"
+require_relative "allocation_stats/middleware"
+require_relative "allocation_stats/trace_allocations"
 
-module Rack::ObjectSpaceStats
+module Rack::AllocationStats
   def self.new(app, options = {})
     Middleware.new(app, options)
   end

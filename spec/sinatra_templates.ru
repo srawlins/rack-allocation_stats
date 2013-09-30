@@ -2,7 +2,7 @@
 # Licensed under the Apache License, Version 2.0, found in the LICENSE file.
 
 require "./spec/sinatra_templates_app"
-require "./lib/rack/objectspace_stats"
+require "./lib/rack/allocation_stats"
 
-use Rack::ObjectSpaceStats
+use Rack::AllocationStats
 run SinatraTemplatesApp.new

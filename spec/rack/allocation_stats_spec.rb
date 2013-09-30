@@ -3,7 +3,7 @@
 
 require_relative "../spec_helper"
 
-describe Rack::ObjectSpaceStats do
+describe Rack::AllocationStats do
   before do
     @app = HelloWorldApp.new
     @vanilla_request_env = Rack::MockRequest.env_for("/")
@@ -11,28 +11,28 @@ describe Rack::ObjectSpaceStats do
   end
 
   it "should return something when called with a tracing request" do
-    status, headers, _ = Rack::ObjectSpaceStats.new(@app).call(@traced_request_env)
+    status, headers, _ = Rack::AllocationStats.new(@app).call(@traced_request_env)
 
     expect(headers["Content-Type"]).to eq "text/plain"
     expect(status).to be 200
   end
 
   it "should not interfere when not a trace request" do
-    _, _, body = Rack::ObjectSpaceStats.new(@app).call(@vanilla_request_env)
+    _, _, body = Rack::AllocationStats.new(@app).call(@vanilla_request_env)
 
     expect(body).to eq ["Hello Rack!"]
   end
 
   it "should delete ros[] params before hitting next app" do
-    objectspace_stats = Rack::ObjectSpaceStats.new(@app)
+    allocation_stats = Rack::AllocationStats.new(@app)
 
     @app.should_receive(:call).with(query_string({}))
 
-    status, headers, _ = objectspace_stats.call(@traced_request_env)
+    status, headers, _ = allocation_stats.call(@traced_request_env)
   end
 
   it "should return correct body when called with a tracing request" do
-    _, _, body = Rack::ObjectSpaceStats.new(@app).call(@traced_request_env)
+    _, _, body = Rack::AllocationStats.new(@app).call(@traced_request_env)
 
     expected_body = [
       "#{HelloWorldApp::FULL_PATH}:#{@app.allocating_lines[1]}  allocated    4 `String`\n",
@@ -51,7 +51,7 @@ describe Rack::ObjectSpaceStats do
 
   it "should return correct body when called with a tracing request with times" do
     request_env = Rack::MockRequest.env_for("/", :params => "ros[trace]=true&ros[times]=4")
-    _, _, body = Rack::ObjectSpaceStats.new(@app).call(request_env)
+    _, _, body = Rack::AllocationStats.new(@app).call(request_env)
 
     expected_body = [
       "#{HelloWorldApp::FULL_PATH}:#{@app.allocating_lines[1]}  allocated   16 `String`\n",
@@ -71,7 +71,7 @@ describe Rack::ObjectSpaceStats do
   it "should return correct body when called on just local files" do
     yaml_app = YamlApp.new
     request_env  = Rack::MockRequest.env_for("/", :params => "ros[trace]=true&ros[scope]=.")
-    _, _, body = Rack::ObjectSpaceStats.new(yaml_app).call(request_env)
+    _, _, body = Rack::AllocationStats.new(yaml_app).call(request_env)
 
     # should be:
     # yaml_app.rb:15  allocated    4 `String`
@@ -88,14 +88,14 @@ describe Rack::ObjectSpaceStats do
   it "should return correct body when called on a specific directory" do
     yaml_app = YamlApp.new
     psych_request_env  = Rack::MockRequest.env_for("/", :params => "ros[trace]=true&ros[scope]=psych")
-    _, _, body = Rack::ObjectSpaceStats.new(yaml_app).call(psych_request_env)
+    _, _, body = Rack::AllocationStats.new(yaml_app).call(psych_request_env)
 
     expect(body.size).to eq 44
   end
 
   it "should return HTML5 in response to an interactive request" do
     interactive_request_env  = Rack::MockRequest.env_for("/", :params => "ros[trace]=true&ros[output]=interactive")
-    _, _, body = Rack::ObjectSpaceStats.new(@app).call(interactive_request_env)
+    _, _, body = Rack::AllocationStats.new(@app).call(interactive_request_env)
 
     expect(body[0]).to match /^<!DOCTYPE html>/
   end

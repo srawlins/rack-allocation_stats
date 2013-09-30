@@ -3,7 +3,7 @@
 
 require 'yajl'
 
-module Rack::ObjectSpaceStats
+module Rack::AllocationStats
   class TraceAllocations < Action
     include Rack::Utils
 
@@ -19,7 +19,7 @@ module Rack::ObjectSpaceStats
     end
 
     def act
-      @stats = ObjectSpace::Stats.new do
+      @stats = AllocationStats.new do
         @times.times do
           @middleware.call_app(@new_env)
         end
@@ -29,26 +29,21 @@ module Rack::ObjectSpaceStats
     def response
       if @scope
         if @scope == "."
-          allocations = @stats.allocations.from_pwd#.
-            #group_by(:sourcefile, :sourceline, :class_plus).
-            #sorted_by_size.all
+          allocations = @stats.allocations.from_pwd
         else
-          allocations = @stats.allocations.from(@scope)#.
-            #group_by(:sourcefile, :sourceline, :class_plus).
-            #sorted_by_size.all
+          allocations = @stats.allocations.from(@scope)
         end
       else
-        allocations = @stats.allocations#.group_by(:sourcefile, :sourceline, :class_plus).
-          #sorted_by_size.all
+        allocations = @stats.allocations
       end
 
       if @output == :interactive
-        @middleware.objectspace_stats_response(build_html_body(allocations.all))
+        @middleware.allocation_stats_response(build_html_body(allocations.all))
       else
         allocations = allocations.
           group_by(:sourcefile, :sourceline, :class_plus).
           sorted_by_size.all
-        @middleware.objectspace_stats_response(build_text_body(allocations))
+        @middleware.allocation_stats_response(build_text_body(allocations))
       end
     end
 
@@ -60,8 +55,6 @@ module Rack::ObjectSpaceStats
         "#{@stats.allocations.bytes.all.inject { |sum, e| sum+e }} bytes\n\n"
 
       body = []
-
-      #[sums] +
 
       if @gc_report
         gc_report = @stats.gc_profiler_report + "\n\n"

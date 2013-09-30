@@ -1,7 +1,7 @@
 # Copyright 2013 Google Inc. All Rights Reserved.
 # Licensed under the Apache License, Version 2.0, found in the LICENSE file.
 
-module Rack::ObjectSpaceStats
+module Rack::AllocationStats
   class Action
     def initialize(env, middleware)
       @env = env

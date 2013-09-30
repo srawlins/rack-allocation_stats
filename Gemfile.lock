@@ -1,7 +1,7 @@
 PATH
-  remote: ../objectspace-stats
+  remote: ../allocation_stats
   specs:
-    objectspace-stats (0.1.0)
+    allocation_stats (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -38,9 +38,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  allocation_stats!
   haml
   liquid
-  objectspace-stats!
   rack
   redcarpet
   rspec

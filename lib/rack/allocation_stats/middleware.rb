@@ -1,7 +1,7 @@
 # Copyright 2013 Google Inc. All Rights Reserved.
 # Licensed under the Apache License, Version 2.0, found in the LICENSE file.
 
-module Rack::ObjectSpaceStats
+module Rack::AllocationStats
   class Middleware
     include Rack::Utils
 
@@ -31,7 +31,7 @@ module Rack::ObjectSpaceStats
       end
     end
 
-    def objectspace_stats_response(body)
+    def allocation_stats_response(body)
       [200, headers(body), Array(body)]
     end
 
