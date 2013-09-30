@@ -46,12 +46,32 @@ describe Rack::ObjectSpaceStats do
     expect(body).to include(expected_body[1])
     expect(body).to include(expected_body[2])
     expect(body).to include(expected_body[3])
+    expect(body).to include(expected_body[4])
+  end
+
+  it "should return correct body when called with a tracing request with times" do
+    request_env = Rack::MockRequest.env_for("/", :params => "ros[trace]=true&ros[times]=4")
+    _, _, body = Rack::ObjectSpaceStats.new(@app).call(request_env)
+
+    expected_body = [
+      "#{HelloWorldApp::FULL_PATH}:#{@app.allocating_lines[1]}  allocated   16 `String`\n",
+      "#{HelloWorldApp::FULL_PATH}:#{@app.allocating_lines[1]}  allocated    4 `Array<String>`\n",
+      "#{HelloWorldApp::FULL_PATH}:#{@app.allocating_lines[1]}  allocated    4 `Array<Fixnum,Hash,Array>`\n",
+      "#{HelloWorldApp::FULL_PATH}:#{@app.allocating_lines[1]}  allocated    4 `Hash`\n",
+      "#{HelloWorldApp::FULL_PATH}:#{@app.allocating_lines[0]}  allocated    4 `String`\n"
+    ]
+
+    expect(body).to include(expected_body[0])
+    expect(body).to include(expected_body[1])
+    expect(body).to include(expected_body[2])
+    expect(body).to include(expected_body[3])
+    expect(body).to include(expected_body[4])
   end
 
   it "should return correct body when called on just local files" do
     yaml_app = YamlApp.new
-    local_request_env  = Rack::MockRequest.env_for("/", :params => "ros[trace]=true&ros[scope]=.")
-    _, _, body = Rack::ObjectSpaceStats.new(yaml_app).call(local_request_env)
+    request_env  = Rack::MockRequest.env_for("/", :params => "ros[trace]=true&ros[scope]=.")
+    _, _, body = Rack::ObjectSpaceStats.new(yaml_app).call(request_env)
 
     # should be:
     # yaml_app.rb:15  allocated    4 `String`
