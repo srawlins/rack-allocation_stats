@@ -17,7 +17,6 @@ Interactive Mode
 Output
 ======
 
-1. change `ros[interactive]=true` to `ros[output]=interactive`
-2. add `ros[output]=json`
-3. add `ros[output]=csv`
-4. add `ros[group_by]=...`
+1. add `ros[output]=json`
+2. add `ros[output]=csv`
+3. add `ros[group_by]=...`
