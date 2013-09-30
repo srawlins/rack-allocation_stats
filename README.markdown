@@ -7,9 +7,9 @@ API
 ===
 
 In order to trigger rack-allocation_stats, a parameter must be appended to the
-request URL: `ros[trace]=true` ('ros' for rack-allocation_stats). Alongside
+request URL: `ras[trace]=true` ('ras' for rack-allocation_stats). Alongside
 that, the following parameters are also available:
 
-* `ros[scope]`
-* `ros[times]`
-* `ros[interactive]`
+* `ras[scope]`
+* `ras[times]`
+* `ras[output]`

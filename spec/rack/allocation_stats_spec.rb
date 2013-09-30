@@ -7,7 +7,7 @@ describe Rack::AllocationStats do
   before do
     @app = HelloWorldApp.new
     @vanilla_request_env = Rack::MockRequest.env_for("/")
-    @traced_request_env  = Rack::MockRequest.env_for("/", :params => "ros[trace]=true")
+    @traced_request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true")
   end
 
   it "should return something when called with a tracing request" do
@@ -23,7 +23,7 @@ describe Rack::AllocationStats do
     expect(body).to eq ["Hello Rack!"]
   end
 
-  it "should delete ros[] params before hitting next app" do
+  it "should delete ras[] params before hitting next app" do
     allocation_stats = Rack::AllocationStats.new(@app)
 
     @app.should_receive(:call).with(query_string({}))
@@ -50,7 +50,7 @@ describe Rack::AllocationStats do
   end
 
   it "should return correct body when called with a tracing request with times" do
-    request_env = Rack::MockRequest.env_for("/", :params => "ros[trace]=true&ros[times]=4")
+    request_env = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[times]=4")
     _, _, body = Rack::AllocationStats.new(@app).call(request_env)
 
     expected_body = [
@@ -70,7 +70,7 @@ describe Rack::AllocationStats do
 
   it "should return correct body when called on just local files" do
     yaml_app = YamlApp.new
-    request_env  = Rack::MockRequest.env_for("/", :params => "ros[trace]=true&ros[scope]=.")
+    request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[scope]=.")
     _, _, body = Rack::AllocationStats.new(yaml_app).call(request_env)
 
     # should be:
@@ -87,14 +87,14 @@ describe Rack::AllocationStats do
 
   it "should return correct body when called on a specific directory" do
     yaml_app = YamlApp.new
-    psych_request_env  = Rack::MockRequest.env_for("/", :params => "ros[trace]=true&ros[scope]=psych")
+    psych_request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[scope]=psych")
     _, _, body = Rack::AllocationStats.new(yaml_app).call(psych_request_env)
 
     expect(body.size).to eq 44
   end
 
   it "should return HTML5 in response to an interactive request" do
-    interactive_request_env  = Rack::MockRequest.env_for("/", :params => "ros[trace]=true&ros[output]=interactive")
+    interactive_request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[output]=interactive")
     _, _, body = Rack::AllocationStats.new(@app).call(interactive_request_env)
 
     expect(body[0]).to match /^<!DOCTYPE html>/

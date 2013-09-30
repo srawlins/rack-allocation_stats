@@ -10,11 +10,11 @@ module Rack::AllocationStats
     def initialize(*args)
       super
       request = Rack::Request.new(@env)
-      # Once we're here, GET["ros"] better exist
-      @scope       = request.GET["ros"]["scope"]
-      @times       = (request.GET["ros"]["times"] || 1).to_i
-      @gc_report   = request.GET["ros"]["gc_report"]
-      @output      = (request.GET["ros"]["output"] || :columnar).to_sym
+      # Once we're here, GET["ras"] better exist
+      @scope       = request.GET["ras"]["scope"]
+      @times       = (request.GET["ras"]["times"] || 1).to_i
+      @gc_report   = request.GET["ras"]["gc_report"]
+      @output      = (request.GET["ras"]["output"] || :columnar).to_sym
       @new_env = delete_custom_params(@env)
     end
 
@@ -97,7 +97,7 @@ module Rack::AllocationStats
       new_env = env
 
       get_params = Rack::Request.new(new_env).GET
-      get_params.delete("ros")
+      get_params.delete("ras")
 
       new_env.delete("rack.request.query_string")
       new_env.delete("rack.request.query_hash")

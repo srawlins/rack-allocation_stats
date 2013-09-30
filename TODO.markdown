@@ -3,9 +3,9 @@
 Interactive Mode
 ================
 
-1. display all ros[] parameters
+1. display all ras[] parameters
 2. group by custom
-3. option to divide counts by ros[times]
+3. option to divide counts by ras[times]
 4. filter out specific gem
 5. add sinatra example / spec
 6. linkify ruby code
@@ -17,6 +17,6 @@ Interactive Mode
 Output
 ======
 
-1. add `ros[output]=json`
-2. add `ros[output]=csv`
-3. add `ros[group_by]=...`
+1. add `ras[output]=json`
+2. add `ras[output]=csv`
+3. add `ras[group_by]=...`
