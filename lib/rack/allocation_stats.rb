@@ -8,7 +8,7 @@ require "allocation_stats"
 require_relative "allocation_stats/action"
 require_relative "allocation_stats/call_app_directly"
 require_relative "allocation_stats/middleware"
-require_relative "allocation_stats/trace_allocations"
+require_relative "allocation_stats/tracer"
 
 require_relative "allocation_stats/formatters/base"
 require_relative "allocation_stats/formatters/text"

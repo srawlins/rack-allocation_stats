@@ -12,7 +12,6 @@ module Rack::AllocationStats
     def call(env)
       @env = env
       action = choose_action
-      #action = TraceAllocations.new(@env, self)
       action.act
       action.response
     end
@@ -25,7 +24,7 @@ module Rack::AllocationStats
       request = Rack::Request.new(@env)
       if request.GET["ras"] && request.GET["ras"]["trace"]
         @content_type = request.GET["ras"]["output"] == "interactive" ? "text/html" : "text/plain"
-        TraceAllocations.new(@env, self)
+        Tracer.new(@env, self)
       else
         CallAppDirectly.new(@env, self)
       end

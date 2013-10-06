@@ -4,7 +4,7 @@
 require 'yajl'
 
 module Rack::AllocationStats
-  class TraceAllocations < Action
+  class Tracer < Action
     include Rack::Utils
 
     attr_accessor :gc_report, :stats

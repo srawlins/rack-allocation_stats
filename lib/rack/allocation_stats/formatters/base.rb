@@ -1,7 +1,7 @@
 module Rack::AllocationStats::Formatters
   class Base
-    def initialize(trace_allocations, allocations)
-      @trace_allocations = trace_allocations
+    def initialize(tracer, allocations)
+      @tracer = tracer
       @allocations = allocations
     end
   end

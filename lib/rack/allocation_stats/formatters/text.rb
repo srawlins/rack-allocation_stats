@@ -2,14 +2,14 @@ class Rack::AllocationStats::Formatters::Text < Rack::AllocationStats::Formatter
   def format
     file_length = @allocations.inject(0) { |length, allocation| [allocation[0][0].length , length].max }
 
-    total_count = @trace_allocations.stats.allocations.all.size
-    bytes = @trace_allocations.stats.allocations.bytes.all.inject { |sum, e| sum + e }
+    total_count = @tracer.stats.allocations.all.size
+    bytes = @tracer.stats.allocations.bytes.all.inject { |sum, e| sum + e }
     sums = "Total: #{total_count} allocations; #{bytes} bytes\n\n"
 
     body = []
 
-    if @trace_allocations.gc_report
-      gc_report = @trace_allocations.stats.gc_profiler_report + "\n\n"
+    if @tracer.gc_report
+      gc_report = @tracer.stats.gc_profiler_report + "\n\n"
       body += [gc_report]
     end
 
