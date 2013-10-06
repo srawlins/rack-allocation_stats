@@ -9,6 +9,8 @@ gem "yajl-ruby", "= 1.1.0"
 
 group :test do
   gem "rspec"
+  gem "factory_girl"
+  gem "pry"
 
   gem "haml"
   gem "liquid"

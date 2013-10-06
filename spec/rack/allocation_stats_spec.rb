@@ -99,4 +99,43 @@ describe Rack::AllocationStats do
 
     expect(body[0]).to match /^<!DOCTYPE html>/
   end
+
+  context("scoping") do
+    before do
+      stats = FactoryGirl.build(:stats, files: ["/foo/bar.rb", File.join(Dir.pwd, "baz.rb")])
+      AllocationStats.stub(:new) { stats }
+    end
+
+    it "should return all allocations when no scope" do
+      allocation_stats = Rack::AllocationStats.new(@app)
+
+      _, _, body = allocation_stats.call(@traced_request_env)
+
+      text = body.join
+      text.should include("bar.rb")
+      text.should include("baz.rb")
+    end
+
+    it "should return locally scoped allocations" do
+      allocation_stats = Rack::AllocationStats.new(@app)
+      request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[scope]=.")
+
+      _, _, body = allocation_stats.call(request_env)
+
+      text = body.join
+      text.should include("baz.rb")
+      text.should_not include("bar.rb")
+    end
+
+    it "should return locally scoped allocations" do
+      allocation_stats = Rack::AllocationStats.new(@app)
+      request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[scope]=foo")
+
+      _, _, body = allocation_stats.call(request_env)
+
+      text = body.join
+      text.should include("bar.rb")
+      text.should_not include("baz.rb")
+    end
+  end
 end

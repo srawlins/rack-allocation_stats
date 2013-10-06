@@ -7,7 +7,7 @@ module Rack::AllocationStats
   class Tracer < Action
     include Rack::Utils
 
-    attr_accessor :gc_report, :stats
+    attr_reader :gc_report, :stats
 
     def initialize(*args)
       super

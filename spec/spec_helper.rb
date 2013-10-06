@@ -1,10 +1,15 @@
 # Copyright 2013 Google Inc. All Rights Reserved.
 # Licensed under the Apache License, Version 2.0, found in the LICENSE file.
 
+require "pry"
+
 require_relative "../lib/rack/allocation_stats"
 require_relative "hello_world_app"
 require_relative "yaml_app"
 require_relative "yajl_app"
+
+require "factory_girl"
+require_relative "factories"
 
 if RbConfig::CONFIG["MAJOR"].to_i < 2 || RbConfig::CONFIG["MINOR"].to_i < 1
   warn "Error: ObjectStats requires Ruby 2.1 or greater"
@@ -20,7 +25,6 @@ module Matchers
     def matches?(env)
       request = Rack::Request.new(env)
       query_string = request.GET
-      #query_string.eql? @expected_match
       if query_string.eql? @expected_match
         true
       else
