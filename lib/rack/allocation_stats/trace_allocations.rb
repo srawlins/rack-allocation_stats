@@ -7,6 +7,8 @@ module Rack::AllocationStats
   class TraceAllocations < Action
     include Rack::Utils
 
+    attr_accessor :gc_report, :stats
+
     def initialize(*args)
       super
       request = Rack::Request.new(@env)
@@ -27,70 +29,29 @@ module Rack::AllocationStats
     end
 
     def response
-      if @scope
-        if @scope == "."
-          allocations = @stats.allocations.from_pwd
-        else
-          allocations = @stats.allocations.from(@scope)
-        end
-      else
-        allocations = @stats.allocations
-      end
+      allocations = scoped_allocations
 
       if @output == :interactive
-        @middleware.allocation_stats_response(build_html_body(allocations.all))
+        allocations = allocations.all
+        @middleware.allocation_stats_response(Formatters::HTML.new(self, allocations).format)
       else
         allocations = allocations.
           group_by(:sourcefile, :sourceline, :class_plus).
           sorted_by_size.all
-        @middleware.allocation_stats_response(build_text_body(allocations))
+        @middleware.allocation_stats_response(Formatters::Text.new(self, allocations).format)
       end
     end
 
-    def build_text_body(allocations)
-      file_length = allocations.inject(0) {|l, allocation| l > allocation[0][0].length ? l : allocation[0][0].length }
-
-      total_count = @stats.allocations.all.size
-      sums = "Total: #{total_count} allocations; " +
-        "#{@stats.allocations.bytes.all.inject { |sum, e| sum+e }} bytes\n\n"
-
-      body = []
-
-      if @gc_report
-        gc_report = @stats.gc_profiler_report + "\n\n"
-        body += [gc_report]
+    def scoped_allocations
+      if @scope
+        if @scope == "."
+          return @stats.allocations.from_pwd
+        else
+          return @stats.allocations.from(@scope)
+        end
+      else
+        return @stats.allocations
       end
-
-      running_total = 0
-      body + allocations.map do |gp, allocations|
-        sourcefile = gp[0]
-        sourceline = gp[1]
-        klass      = gp[2]
-        puts "A STRING: #{allocations.size.inspect} (#{allocations.size.class})" if allocations.size.class == String
-        my_pct     = (allocations.size * 1.0 / total_count) * 100
-        running_total += allocations.size
-        puts "A STRING: #{running_total.inspect} (#{running_total.class})" if running_total.class == String
-        running_pct = (running_total * 1.0 / total_count) * 100
-
-        "%-#{file_length+4}s allocated %4d `%s` (%4.2f %4.2f)\n" % ["#{sourcefile}:#{sourceline}", allocations.size, klass, my_pct, running_pct]
-        "%-#{file_length+4}s allocated %4d `%s`\n" % ["#{sourcefile}:#{sourceline}", allocations.size, klass]
-      end
-    end
-
-    def build_html_body(allocations)
-      index_html_erb     = ERB.new(File.read(File.join(__dir__, "interactive", "index.html.erb")))
-      jquery_min_js      =         File.read(File.join(__dir__, "interactive", "jquery-2.0.3.min.js"))
-      jquery_ui_min_js   =         File.read(File.join(__dir__, "interactive", "jquery-ui-1.10.3.custom.min.js"))
-      underscore_min_js  =         File.read(File.join(__dir__, "interactive", "underscore-min.js"))
-      allocations_js_erb = ERB.new(File.read(File.join(__dir__, "interactive", "allocations.js.erb")))
-      allocations_js     = allocations_js_erb.result(binding)
-      jquery_ui_min_css  =         File.read(File.join(__dir__, "interactive", "jquery-ui-1.10.3.custom.min.css"))
-      style_css          =         File.read(File.join(__dir__, "interactive", "style.css"))
-
-      allocating_gems = ["no gems allocated any objects"]
-
-      html_body = index_html_erb.result(binding)
-      return [html_body]
     end
 
     def delete_custom_params(env)
