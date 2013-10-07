@@ -100,6 +100,22 @@ describe Rack::AllocationStats do
     expect(body[0]).to match /^<!DOCTYPE html>/
   end
 
+  it "returns the corrent Content-Length in the headers" do
+    file = "/foo/bar.rb"
+    line = 7
+
+    # TODO 5 comes from factories.rb; it should come from here.
+    # TODO String comes from factories.rb; it should come from here.
+    expected_body = "#{file}:#{line}   allocated    5 `String`\n"
+
+    stats = FactoryGirl.build(:stats, files: [file], sourceline: line)
+    AllocationStats.stub(:new) { stats }
+    allocation_stats = Rack::AllocationStats.new(@app)
+    _, headers, _ = allocation_stats.call(@traced_request_env)
+
+    headers["Content-Length"].to_i.should be expected_body.length
+  end
+
   context("scoping") do
     before do
       stats = FactoryGirl.build(:stats, files: ["/foo/bar.rb", File.join(Dir.pwd, "baz.rb")])

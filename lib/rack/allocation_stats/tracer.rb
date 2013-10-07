@@ -43,14 +43,12 @@ module Rack::AllocationStats
     end
 
     def scoped_allocations
-      if @scope
-        if @scope == "."
-          return @stats.allocations.from_pwd
-        else
-          return @stats.allocations.from(@scope)
-        end
+      return @stats.allocations if @scope.nil?
+
+      if @scope == "."
+        return @stats.allocations.from_pwd
       else
-        return @stats.allocations
+        return @stats.allocations.from(@scope)
       end
     end
 

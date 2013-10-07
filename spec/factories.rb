@@ -21,24 +21,26 @@ FactoryGirl.define do
     ignore do
       size 5
       files ["foo/bar.rb", "baz/quux.rb"]
+      sourceline 7
     end
 
     after(:build) do |stats, evaluator|
       allocations = []
       size = evaluator.size
+      files_count = evaluator.files.size
 
       # 3 from 1st file
       if size > 0
         file = evaluator.files[0]
         count = [size, 3].min
-        count.times { allocations << FactoryGirl.build(:allocation, sourcefile: file) }
+        count.times { allocations << FactoryGirl.build(:allocation, sourcefile: file, sourceline: evaluator.sourceline) }
         size -= count
       end
 
       # more from 2nd file
       if size > 0
-        file = evaluator.files[1]
-        size.times { allocations << FactoryGirl.build(:allocation, sourcefile: file) }
+        file = evaluator.files[1 % files_count]
+        size.times { allocations << FactoryGirl.build(:allocation, sourcefile: file, sourceline: evaluator.sourceline) }
         size -= count
       end
 
