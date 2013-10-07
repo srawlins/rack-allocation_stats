@@ -10,20 +10,20 @@ describe Rack::AllocationStats do
     @traced_request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true")
   end
 
-  it "should return something when called with a tracing request" do
+  it "returns something when called with a tracing request" do
     status, headers, _ = Rack::AllocationStats.new(@app).call(@traced_request_env)
 
     expect(headers["Content-Type"]).to eq "text/plain"
     expect(status).to be 200
   end
 
-  it "should not interfere when not a trace request" do
+  it "does not interfere when not a trace request" do
     _, _, body = Rack::AllocationStats.new(@app).call(@vanilla_request_env)
 
     expect(body).to eq ["Hello Rack!"]
   end
 
-  it "should delete ras[] params before hitting next app" do
+  it "deletes ras[] params before hitting next app" do
     allocation_stats = Rack::AllocationStats.new(@app)
 
     @app.should_receive(:call).with(query_string({}))
@@ -31,7 +31,7 @@ describe Rack::AllocationStats do
     status, headers, _ = allocation_stats.call(@traced_request_env)
   end
 
-  it "should return correct body when called with a tracing request" do
+  it "returns the correct body when called with a tracing request" do
     _, _, body = Rack::AllocationStats.new(@app).call(@traced_request_env)
 
     expected_body = [
@@ -49,7 +49,7 @@ describe Rack::AllocationStats do
     expect(body).to include(expected_body[4])
   end
 
-  it "should return correct body when called with a tracing request with times" do
+  it "returns correct body when called with a tracing request with times" do
     request_env = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[times]=4")
     _, _, body = Rack::AllocationStats.new(@app).call(request_env)
 
@@ -68,7 +68,7 @@ describe Rack::AllocationStats do
     expect(body).to include(expected_body[4])
   end
 
-  it "should return correct body when called on just local files" do
+  it "returns correct body when called on just local files" do
     yaml_app = YamlApp.new
     request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[scope]=.")
     _, _, body = Rack::AllocationStats.new(yaml_app).call(request_env)
@@ -85,7 +85,7 @@ describe Rack::AllocationStats do
     expect(body.size).to eq 7
   end
 
-  it "should return correct body when called on a specific directory" do
+  it "returns the correct body when called on a specific directory" do
     yaml_app = YamlApp.new
     psych_request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[scope]=psych")
     _, _, body = Rack::AllocationStats.new(yaml_app).call(psych_request_env)
@@ -93,7 +93,7 @@ describe Rack::AllocationStats do
     expect(body.size).to eq 44
   end
 
-  it "should return HTML5 in response to an interactive request" do
+  it "returns HTML5 in response to an interactive request" do
     interactive_request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[output]=interactive")
     _, _, body = Rack::AllocationStats.new(@app).call(interactive_request_env)
 
@@ -104,34 +104,31 @@ describe Rack::AllocationStats do
     before do
       stats = FactoryGirl.build(:stats, files: ["/foo/bar.rb", File.join(Dir.pwd, "baz.rb")])
       AllocationStats.stub(:new) { stats }
+      @allocation_stats = Rack::AllocationStats.new(@app)
     end
 
-    it "should return all allocations when no scope" do
-      allocation_stats = Rack::AllocationStats.new(@app)
-
-      _, _, body = allocation_stats.call(@traced_request_env)
+    it "returns all allocations when no scope is specified" do
+      _, _, body = @allocation_stats.call(@traced_request_env)
 
       text = body.join
       text.should include("bar.rb")
       text.should include("baz.rb")
     end
 
-    it "should return locally scoped allocations" do
-      allocation_stats = Rack::AllocationStats.new(@app)
+    it "returns locally-scoped allocations" do
       request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[scope]=.")
 
-      _, _, body = allocation_stats.call(request_env)
+      _, _, body = @allocation_stats.call(request_env)
 
       text = body.join
       text.should include("baz.rb")
       text.should_not include("bar.rb")
     end
 
-    it "should return locally scoped allocations" do
-      allocation_stats = Rack::AllocationStats.new(@app)
+    it "returns allocations limited by scope" do
       request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[scope]=foo")
 
-      _, _, body = allocation_stats.call(request_env)
+      _, _, body = @allocation_stats.call(request_env)
 
       text = body.join
       text.should include("bar.rb")
