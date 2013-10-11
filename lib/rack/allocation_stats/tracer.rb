@@ -12,11 +12,12 @@ module Rack::AllocationStats
     def initialize(*args)
       super
       request = Rack::Request.new(@env)
+
       # Once we're here, GET["ras"] better exist
-      @scope       = request.GET["ras"]["scope"]
-      @times       = (request.GET["ras"]["times"] || 1).to_i
-      @gc_report   = request.GET["ras"]["gc_report"]
-      @output      = (request.GET["ras"]["output"] || :columnar).to_sym
+      @scope = request.GET["ras"]["scope"]
+      @times = (request.GET["ras"]["times"] || 1).to_i
+      @gc_report = request.GET["ras"]["gc_report"]
+      @output = (request.GET["ras"]["output"] || :columnar).to_sym
       @new_env = delete_custom_params(@env)
     end
 
@@ -35,14 +36,10 @@ module Rack::AllocationStats
         allocations = allocations.all
         @middleware.allocation_stats_response(Formatters::HTML.new(self, allocations).format)
       elsif @output == :json
-        allocations = allocations.
-          group_by(:sourcefile, :sourceline, :class_plus).
-          sorted_by_size.all
+        allocations = default_groups_and_sort(allocations)
         @middleware.allocation_stats_response(Formatters::JSON.new(self, allocations).format)
       else
-        allocations = allocations.
-          group_by(:sourcefile, :sourceline, :class_plus).
-          sorted_by_size.all
+        allocations = default_groups_and_sort(allocations)
         @middleware.allocation_stats_response(Formatters::Text.new(self, allocations).format)
       end
     end
@@ -55,6 +52,13 @@ module Rack::AllocationStats
       else
         return @stats.allocations.from(@scope)
       end
+    end
+
+    def default_groups_and_sort(allocations)
+      allocations.
+        group_by(:sourcefile, :sourceline, :class_plus).
+        sorted_by_size.
+        all
     end
 
     def delete_custom_params(env)
