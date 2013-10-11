@@ -6,6 +6,7 @@ source "https://rubygems.org"
 gem "allocation_stats", path: "../allocation_stats"
 gem "rack"
 gem "yajl-ruby", "= 1.1.0"
+gem "sass"
 
 group :test do
   gem "rspec"
@@ -17,6 +18,4 @@ group :test do
   gem "redcarpet"
   gem "sinatra"
   gem "slim"
-
-  gem "sass"
 end
