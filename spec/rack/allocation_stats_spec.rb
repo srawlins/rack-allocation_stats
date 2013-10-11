@@ -151,4 +151,24 @@ describe Rack::AllocationStats do
       text.should_not include("baz.rb")
     end
   end
+
+  it "returns JSON when res[output]=json" do
+    stats = FactoryGirl.build(:stats, files: ["/foo/bar.rb", File.join(Dir.pwd, "baz.rb")])
+    AllocationStats.stub(:new) { stats }
+    @allocation_stats = Rack::AllocationStats.new(@app)
+
+    json_request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[output]=json")
+    _, _, body = @allocation_stats.call(json_request_env)
+
+    allocation = stats.allocations.all.first
+    first_group_key = ["/foo/bar.rb", 7, String]
+
+    text = body.join
+    text.should include(allocation.to_json)
+    text.should include(first_group_key.to_json)
+
+    hash = {group_key: first_group_key, allocations: [allocation, allocation, allocation]}
+
+    text.should include(Yajl::Encoder.encode(hash))
+  end
 end

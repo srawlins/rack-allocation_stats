@@ -34,6 +34,11 @@ module Rack::AllocationStats
       if @output == :interactive
         allocations = allocations.all
         @middleware.allocation_stats_response(Formatters::HTML.new(self, allocations).format)
+      elsif @output == :json
+        allocations = allocations.
+          group_by(:sourcefile, :sourceline, :class_plus).
+          sorted_by_size.all
+        @middleware.allocation_stats_response(Formatters::JSON.new(self, allocations).format)
       else
         allocations = allocations.
           group_by(:sourcefile, :sourceline, :class_plus).

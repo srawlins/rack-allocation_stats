@@ -11,8 +11,9 @@ require_relative "allocation_stats/middleware"
 require_relative "allocation_stats/tracer"
 
 require_relative "allocation_stats/formatters/base"
-require_relative "allocation_stats/formatters/text"
 require_relative "allocation_stats/formatters/html"
+require_relative "allocation_stats/formatters/json"
+require_relative "allocation_stats/formatters/text"
 
 module Rack::AllocationStats
   def self.new(app, options = {})

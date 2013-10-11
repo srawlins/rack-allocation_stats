@@ -18,7 +18,6 @@ Interactive Mode
 Output
 ======
 
-* add `ras[output]=json`
 * add `ras[output]=csv`
 * add `ras[group_by]=...`
 * add `ras[help]`
