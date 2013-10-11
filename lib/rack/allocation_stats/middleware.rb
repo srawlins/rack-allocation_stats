@@ -23,10 +23,18 @@ module Rack::AllocationStats
     def choose_action
       request = Rack::Request.new(@env)
       if request.GET["ras"] && request.GET["ras"]["trace"]
-        @content_type = request.GET["ras"]["output"] == "interactive" ? "text/html" : "text/plain"
+        @content_type = content_type(request.GET["ras"]["output"])
         Tracer.new(@env, self)
       else
         CallAppDirectly.new(@env, self)
+      end
+    end
+
+    def content_type(output_type)
+      case output_type
+      when "interactive" then "text/html"
+      when "json"        then "application/json"
+      else                    "text/plain"
       end
     end
 

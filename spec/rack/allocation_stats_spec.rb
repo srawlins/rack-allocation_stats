@@ -171,4 +171,12 @@ describe Rack::AllocationStats do
 
     text.should include(Yajl::Encoder.encode(hash))
   end
+
+  it "returns something when called with a tracing request" do
+    json_request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[output]=json")
+    status, headers, _ = Rack::AllocationStats.new(@app).call(json_request_env)
+
+    expect(headers["Content-Type"]).to eq "application/json"
+    expect(status).to be 200
+  end
 end
