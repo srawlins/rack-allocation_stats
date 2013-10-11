@@ -4,6 +4,7 @@ Interactive Mode
 ================
 
 * display all ras[] parameters
+  (where? they're all in the location bar for now...)
 * group by custom
 * option to divide counts by ras[times]
 * filter out specific gem
@@ -12,8 +13,6 @@ Interactive Mode
 * sorting ability
 * count pct choice
 * test with jasmine?
-* convert to SCSS
-* allocations minimum step size = ras[times]
 
 Output
 ======

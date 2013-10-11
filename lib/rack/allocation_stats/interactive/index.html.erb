@@ -27,13 +27,17 @@
 
     <script>
 $(function() {
-  $("#filter-count").spinner({
-    spin: function(event, ui) {
-      if (ui.value < 1 ) { $(this).spinner("value", 1); return false; }
-    },
-    change: refillTable,
-    stop: refillTable
-  });
+  var spinnerStart = Math.max(getParameterByName("ras[times]")*1, 1);
+  $("#filter-count").
+    val(spinnerStart).
+    spinner({
+      step: spinnerStart,
+      spin: function(event, ui) {
+        if (ui.value < 1 ) { $(this).spinner("value", 1); return false; }
+      },
+      change: refillTable,
+      stop: refillTable
+    });
 });
     </script>
   </head>
@@ -68,7 +72,7 @@ $(function() {
 
         <section id="filter-controls">
           only groups with at least:
-          <input type="text" id="filter-count" name="filter-count" value="1" />
+          <input type="text" id="filter-count" name="filter-count" />
           allocations
         </section>
       </section>
