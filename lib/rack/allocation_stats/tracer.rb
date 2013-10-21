@@ -57,7 +57,7 @@ module Rack::AllocationStats
     def default_groups_and_sort(allocations)
       allocations.
         group_by(:sourcefile, :sourceline, :class_plus).
-        sorted_by_size.
+        sort_by_size.
         all
     end
 
