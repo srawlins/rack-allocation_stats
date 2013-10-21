@@ -22,7 +22,7 @@ module Rack::AllocationStats
     end
 
     def act
-      @stats = AllocationStats.new do
+      @stats = AllocationStats.trace do
         @times.times do
           @middleware.call_app(@new_env)
         end
