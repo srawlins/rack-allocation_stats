@@ -109,7 +109,7 @@ describe Rack::AllocationStats do
     expected_body = "#{file}:#{line}   allocated    5 `String`\n"
 
     stats = FactoryGirl.build(:stats, files: [file], sourceline: line)
-    AllocationStats.stub(:new) { stats }
+    AllocationStats.stub(:trace) { stats }
     allocation_stats = Rack::AllocationStats.new(@app)
     _, headers, _ = allocation_stats.call(@traced_request_env)
 
@@ -119,7 +119,7 @@ describe Rack::AllocationStats do
   context("scoping") do
     before do
       stats = FactoryGirl.build(:stats, files: ["/foo/bar.rb", File.join(Dir.pwd, "baz.rb")])
-      AllocationStats.stub(:new) { stats }
+      AllocationStats.stub(:trace) { stats }
       @allocation_stats = Rack::AllocationStats.new(@app)
     end
 
@@ -154,7 +154,7 @@ describe Rack::AllocationStats do
 
   it "returns JSON when res[output]=json" do
     stats = FactoryGirl.build(:stats, files: ["/foo/bar.rb", File.join(Dir.pwd, "baz.rb")])
-    AllocationStats.stub(:new) { stats }
+    AllocationStats.stub(:trace) { stats }
     @allocation_stats = Rack::AllocationStats.new(@app)
 
     json_request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[output]=json")
@@ -172,11 +172,26 @@ describe Rack::AllocationStats do
     text.should include(Yajl::Encoder.encode(hash))
   end
 
-  it "returns something when called with a tracing request" do
+  it "returns the right Content-Type and status for JSON" do
     json_request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[output]=json")
     status, headers, _ = Rack::AllocationStats.new(@app).call(json_request_env)
 
     expect(headers["Content-Type"]).to eq "application/json"
     expect(status).to be 200
+  end
+
+  it "returns the right Content-Type and status for help" do
+    help_request_env  = Rack::MockRequest.env_for("/", :params => "ras[help]")
+    status, headers, _ = Rack::AllocationStats.new(@app).call(help_request_env)
+
+    expect(headers["Content-Type"]).to eq "text/plain"
+    expect(status).to be 200
+  end
+
+  it "returns the right body for help" do
+    help_request_env  = Rack::MockRequest.env_for("/", :params => "ras[help]")
+    _, _, body = Rack::AllocationStats.new(@app).call(help_request_env)
+
+    body.first.should include("Rack AllocationStats help\n")
   end
 end

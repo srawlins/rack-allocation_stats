@@ -1,0 +1,19 @@
+Rack AllocationStats help
+
+Append ras[trace]=true to your URL to trace all object allocations during the
+request. The server will respond with statistics on the allocations, instead of
+the application's response.
+
+Options
+
+ras[times]=COUNT
+    send the request to the application COUNT times, to reduce statistics from
+    initial allocations that don't happen on repeat requests.
+
+ras[help]
+    immediately respond with this help text
+
+ras[scope]=SCOPE
+    limit the list of allocations in the response to those whose `sourcefile`
+    matches SCOPE. ras[scope]='.' is a special case which is expanded to be
+    the current working directory.

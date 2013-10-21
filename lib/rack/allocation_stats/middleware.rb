@@ -22,7 +22,10 @@ module Rack::AllocationStats
 
     def choose_action
       request = Rack::Request.new(@env)
-      if request.GET["ras"] && request.GET["ras"]["trace"]
+      if request.GET["ras"] && request.GET["ras"].has_key?("help")
+        @content_type = "text/plain"
+        help_text
+      elsif request.GET["ras"] && request.GET["ras"]["trace"]
         @content_type = content_type(request.GET["ras"]["output"])
         Tracer.new(@env, self)
       else
@@ -47,6 +50,13 @@ module Rack::AllocationStats
         "Content-Type"   => @content_type,
         "Content-Length" => body.inject(0) { |len, part| len + bytesize(part) }.to_s
       }
+    end
+
+    def help_text
+      app = OpenStruct.new
+      app.body = [File.read(File.join(__dir__, "help.txt"))]
+      app.response = allocation_stats_response(app.body)
+      app
     end
   end
 end

@@ -19,5 +19,5 @@ Output
 
 * add `ras[output]=csv`
 * add `ras[group_by]=...`
-* add `ras[help]`
 * add `ras[detail]=percent`
+* add `ras[burn]=BURN`
