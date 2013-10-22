@@ -49,6 +49,25 @@ describe Rack::AllocationStats do
     expect(body).to include(expected_body[4])
   end
 
+  it "returns the correct body when called with alias_paths" do
+    request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[alias_paths]=true")
+    _, _, body = Rack::AllocationStats.new(@app).call(request_env)
+
+    expected_body = [
+      "<PWD>/spec/hello_world_app.rb:#{@app.allocating_lines[1]}  allocated    4 `String`\n",
+      "<PWD>/spec/hello_world_app.rb:#{@app.allocating_lines[1]}  allocated    1 `Array<String>`\n",
+      "<PWD>/spec/hello_world_app.rb:#{@app.allocating_lines[1]}  allocated    1 `Array<Fixnum,Hash,Array>`\n",
+      "<PWD>/spec/hello_world_app.rb:#{@app.allocating_lines[1]}  allocated    1 `Hash`\n",
+      "<PWD>/spec/hello_world_app.rb:#{@app.allocating_lines[0]}  allocated    1 `String`\n"
+    ]
+
+    expect(body).to include(expected_body[0])
+    expect(body).to include(expected_body[1])
+    expect(body).to include(expected_body[2])
+    expect(body).to include(expected_body[3])
+    expect(body).to include(expected_body[4])
+  end
+
   it "returns correct body when called with a tracing request with times" do
     request_env = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[times]=4")
     _, _, body = Rack::AllocationStats.new(@app).call(request_env)

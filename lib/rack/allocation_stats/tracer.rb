@@ -18,6 +18,7 @@ module Rack::AllocationStats
       @times = (request.GET["ras"]["times"] || 1).to_i
       @gc_report = request.GET["ras"]["gc_report"]
       @output = (request.GET["ras"]["output"] || :columnar).to_sym
+      @alias_paths = request.GET["ras"]["alias_paths"] || false
       @new_env = delete_custom_params(@env)
     end
 
@@ -45,12 +46,14 @@ module Rack::AllocationStats
     end
 
     def scoped_allocations
-      return @stats.allocations if @scope.nil?
+      allocations = @stats.allocations(alias_paths: @alias_paths)
+
+      return allocations if @scope.nil?
 
       if @scope == "."
-        return @stats.allocations.from_pwd
+        return allocations.from_pwd
       else
-        return @stats.allocations.from(@scope)
+        return allocations.from(@scope)
       end
     end
 
