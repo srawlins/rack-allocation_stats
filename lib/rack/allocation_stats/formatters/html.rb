@@ -8,6 +8,7 @@ class Rack::AllocationStats::Formatters::HTML < Rack::AllocationStats::Formatter
     underscore_min_js  =         File.read(File.join(interactive_dir, "underscore-min.js"))
     allocations_js_erb = ERB.new(File.read(File.join(interactive_dir, "allocations.js.erb")))
     allocations_js     = allocations_js_erb.result(binding)
+    interactive_js     =         File.read(File.join(interactive_dir, "interactive.js"))
     jquery_ui_min_css  =         File.read(File.join(interactive_dir, "jquery-ui-1.10.3.custom.min.css"))
     style_css          =         File.read(File.join(interactive_dir, "style.css"))
 
