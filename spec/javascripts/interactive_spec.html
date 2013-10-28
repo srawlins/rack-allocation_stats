@@ -92,14 +92,21 @@ Arel::Attributes::Attribute =&gt; Arel::&hellip;::Attribute</p>
   <span class="p">});</span>
 
   <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;abbreviates classes with &gt; 3 namespaces&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">expect</span><span class="p">(</span><span class="nx">abbreviateClass</span><span class="p">(</span><span class="s2">&quot;Arel::Attributes::Attribute&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;Arel::&amp;hellip;::Attribute&quot;</span><span class="p">);</span>
-    <span class="nx">expect</span><span class="p">(</span><span class="nx">abbreviateClass</span><span class="p">(</span><span class="s2">&quot;ActionDispatch::Routing::RouteSet::Generator&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;ActionDispatch::&amp;hellip;::Generator&quot;</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">abbreviateClass</span><span class="p">(</span><span class="s2">&quot;Arel::Attributes::Attribute&quot;</span><span class="p">)).</span>
+      <span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;&lt;abbr title=&quot;Arel::Attributes::Attribute&quot;&gt;Arel::Att&amp;hellip;Attribute&lt;/abbr&gt;&#39;</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">abbreviateClass</span><span class="p">(</span><span class="s2">&quot;ActionDispatch::Routing::RouteSet::Generator&quot;</span><span class="p">)).</span>
+      <span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;&lt;abbr title=&quot;ActionDispatch::Routing::RouteSet::Generator&quot;&gt;ActionDispatch::Rou&amp;hellip;Generator&lt;/abbr&gt;&#39;</span><span class="p">);</span>
   <span class="p">});</span>
 
   <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;abbreviates subclasses when &gt;= 3 namespaces&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="nx">expect</span><span class="p">(</span><span class="nx">abbreviateClass</span><span class="p">(</span><span class="s2">&quot;Array&lt;String&gt;&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;Array&lt;String&gt;&quot;</span><span class="p">);</span>
     <span class="nx">expect</span><span class="p">(</span><span class="nx">abbreviateClass</span><span class="p">(</span><span class="s2">&quot;Array&lt;Fixnum,String&gt;&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;Array&lt;Fixnum,String&gt;&quot;</span><span class="p">);</span>
-    <span class="nx">expect</span><span class="p">(</span><span class="nx">abbreviateClass</span><span class="p">(</span><span class="s2">&quot;Array&lt;Arel::Nodes::Equality&gt;&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;Array&lt;Arel::&amp;hellip;::Equality&gt;&quot;</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">abbreviateClass</span><span class="p">(</span><span class="s2">&quot;Array&lt;Arel::Nodes::Equality&gt;&quot;</span><span class="p">)).</span>
+      <span class="nx">toBe</span><span class="p">(</span><span class="s1">&#39;&lt;abbr title=&quot;Array&lt;Arel::Nodes::Equality&gt;&quot;&gt;Array&lt;Arel::Nod&amp;hellip;Equality&gt;&lt;/abbr&gt;&#39;</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;doesn&#39;t abbreviate when only 3 namespaces and middle has &lt; 5 letters&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">abbreviateClass</span><span class="p">(</span><span class="s2">&quot;ActionDispatch::Http::ParameterFilter&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;ActionDispatch::Http::ParameterFilter&quot;</span><span class="p">);</span>
   <span class="p">});</span>
 <span class="p">});</span>
 

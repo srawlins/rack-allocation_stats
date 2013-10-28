@@ -18,14 +18,21 @@ describe("abbreviateClass", function() {
   });
 
   it("abbreviates classes with > 3 namespaces", function() {
-    expect(abbreviateClass("Arel::Attributes::Attribute")).toBe("Arel::&hellip;::Attribute");
-    expect(abbreviateClass("ActionDispatch::Routing::RouteSet::Generator")).toBe("ActionDispatch::&hellip;::Generator");
+    expect(abbreviateClass("Arel::Attributes::Attribute")).
+      toBe('<abbr title="Arel::Attributes::Attribute">Arel::Att&hellip;Attribute</abbr>');
+    expect(abbreviateClass("ActionDispatch::Routing::RouteSet::Generator")).
+      toBe('<abbr title="ActionDispatch::Routing::RouteSet::Generator">ActionDispatch::Rou&hellip;Generator</abbr>');
   });
 
   it("abbreviates subclasses when >= 3 namespaces", function() {
     expect(abbreviateClass("Array<String>")).toBe("Array<String>");
     expect(abbreviateClass("Array<Fixnum,String>")).toBe("Array<Fixnum,String>");
-    expect(abbreviateClass("Array<Arel::Nodes::Equality>")).toBe("Array<Arel::&hellip;::Equality>");
+    expect(abbreviateClass("Array<Arel::Nodes::Equality>")).
+      toBe('<abbr title="Array<Arel::Nodes::Equality>">Array<Arel::Nod&hellip;Equality></abbr>');
+  });
+
+  it("doesn't abbreviate when only 3 namespaces and middle has < 5 letters", function() {
+    expect(abbreviateClass("ActionDispatch::Http::ParameterFilter")).toBe("ActionDispatch::Http::ParameterFilter");
   });
 });
 
