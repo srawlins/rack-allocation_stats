@@ -28,8 +28,9 @@ body {
     color: #000000;
     border: solid 1px #bbbbbb; }
 
-.align-right {
-  text-align: right; }
+.count {
+  text-align: right;
+  white-space: nowrap; }
 
 #allocations th, #allocations td {
   padding: 1px 4px; }
@@ -66,7 +67,7 @@ body {
   font-weight: bold; }
 
 input[type='checkbox'] {
-  margin: 0.2em 0; }
+  margin: 2px; }
 
 /* jQuery UI hacks in lieu of a theme with images */
 .ui-spinner-input {

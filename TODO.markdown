@@ -3,15 +3,13 @@
 Interactive Mode
 ================
 
-* group by custom
 * option to divide counts by ras[times]
 * filter out specific gem
 * add sinatra example / spec
-* linkify ruby code
 * sorting ability
+* linkify ruby code
 * count pct choice
-* test with jasmine?
-* let text next to checkbox, in controls, be selectable
+* group by custom
 * display all ras[] parameters
   (where? they're all in the location bar for now...)
 

@@ -51,20 +51,22 @@ $(function() {
 
       <section id="controls">
         <section id="gb-controls">
-          group by: <input type="checkbox" id="gb-file" name="file" checked="checked"></input>file
-          <input type="checkbox" id="gb-line" name="line" checked="checked"></input>line
-          <input type="checkbox" id="gb-class-path" name="class_path"></input>class path
-          <input type="checkbox" id="gb-method-id" name="method_id"></input>method id
-          <input type="checkbox" id="gb-class" name="class"></input>class
-          <input type="checkbox" id="gb-class-plus" name="class_plus" checked="checked"></input>class+
+          group by:
+          <label for="gb-file"><input type="checkbox" id="gb-file" name="file" checked="checked"></input>file</label>
+          <label for="gb-line"><input type="checkbox" id="gb-line" name="line" checked="checked"></input>line</label>
+          <label for="gb-class-path"><input type="checkbox" id="gb-class-path" name="class_path"></input>class path</label>
+          <label for="gb-method-id"><input type="checkbox" id="gb-method-id" name="method_id"></input>method id</label>
+          <label for="gb-class"><input type="checkbox" id="gb-class" name="class"></input>class</label>
+          <label for="gb-class-plus"><input type="checkbox" id="gb-class-plus" name="class_plus" checked="checked"></input>class+</label>
         </section>
 
         <section id="filter-controls">
           <div>
-            filter out: <input type="checkbox" id="filter-ruby" name="filter-ruby"></input>ruby
-            <input type="checkbox" id="filter-gems" name="filter-gems"></input>gems
-            <input type="checkbox" id="filter-pwd" name="filter-pwd"></input>project (PWD)
-            <input type="checkbox" id="filter-eval" name="filter-eval" checked="checked"></input>(eval)
+            filter out:
+            <label for="filter-ruby"><input type="checkbox" id="filter-ruby" name="filter-ruby"></input>ruby</label>
+            <label for="filter-gems"><input type="checkbox" id="filter-gems" name="filter-gems"></input>gems</label>
+            <label for="filter-pwd"><input type="checkbox" id="filter-pwd" name="filter-pwd"></input>project (PWD)</label>
+            <label for="filter-eval"><input type="checkbox" id="filter-eval" name="filter-eval" checked="checked"></input>(eval)</label>
           </div>
           <div>
             specific gems:
@@ -81,7 +83,9 @@ $(function() {
         </section>
 
         <section id="option-controls">
-          <input type="checkbox" id="option-abbreviate-classes" name="option-abbreviate-classes" checked="checked"></input>abbreviate classes
+          <label for="option-abbreviate-classes">
+            <input type="checkbox" id="option-abbreviate-classes" name="option-abbreviate-classes" checked="checked"></input>abbreviate classes
+          </label>
         </section>
       </section>
 

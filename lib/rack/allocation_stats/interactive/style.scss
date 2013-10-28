@@ -39,8 +39,9 @@ body {
   }
 }
 
-.align-right {
+.count {
   text-align: right;
+  white-space: nowrap;
 }
 
 #allocations {
@@ -99,7 +100,7 @@ body {
 }
 
 input[type='checkbox'] {
-  margin: 0.2em 0;
+  margin: 2px;
 }
 
 /* jQuery UI hacks in lieu of a theme with images */
