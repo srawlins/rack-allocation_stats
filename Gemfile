@@ -8,14 +8,18 @@ gem "rack"
 gem "yajl-ruby", "= 1.1.0"
 gem "sass"
 
+group :development do
+  gem "pry"
+  gem "rocco", git: 'https://github.com/infews/rocco.git'
+end
+
 group :test do
   gem "rspec"
   gem "factory_girl"
-  gem "pry"
 
   gem "haml"
   gem "liquid"
-  gem "redcarpet"
+  #gem "redcarpet"
   gem "sinatra"
   gem "slim"
 end

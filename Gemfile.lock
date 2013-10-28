@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/infews/rocco.git
+  revision: d2b9e8e434261d35e9874b42d935d6f6716d5064
+  specs:
+    rocco (0.8.2)
+      mustache
+      redcarpet (~> 1.17)
+
 PATH
   remote: ../allocation_stats
   specs:
@@ -24,6 +32,7 @@ GEM
     method_source (0.8.2)
     minitest (4.7.5)
     multi_json (1.8.1)
+    mustache (0.99.4)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -31,7 +40,7 @@ GEM
     rack (1.5.2)
     rack-protection (1.2.0)
       rack
-    redcarpet (3.0.0)
+    redcarpet (1.17.2)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -66,7 +75,7 @@ DEPENDENCIES
   liquid
   pry
   rack
-  redcarpet
+  rocco!
   rspec
   sass
   sinatra
