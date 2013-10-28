@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+  <title>Rack AllocationStats - interactive output specs</title>
+  <link href='http://fonts.googleapis.com/css?family=Lora|Istok+Web:700' rel='stylesheet' type='text/css'/>
+  <link rel="stylesheet" href="css/docco.css"/>
+  <link rel="stylesheet" href="css/jasmine_docco-1.3.1.css"/>
+  <link rel="stylesheet" href="js/jasmine.css"/>
+  <script src="js/jasmine.js"></script>
+  <script src="js/jasmine-html.js"></script>
+  <script src="../../lib/rack/allocation_stats/interactive/jquery-2.0.3.min.js"></script>
+  <script src="../../lib/rack/allocation_stats/interactive/underscore-min.js"></script>
+  <script src="../../lib/rack/allocation_stats/interactive/interactive.js"></script>
+  <script src="interactive_spec.js"></script>
+  <script>
+(function() {
+  var jasmineEnv = jasmine.getEnv();
+  jasmineEnv.updateInterval = 250;
+
+  var htmlReporter = new jasmine.HtmlReporter();
+  jasmineEnv.addReporter(htmlReporter);
+
+  jasmineEnv.specFilter = function(spec) {
+    return htmlReporter.specFilter(spec);
+  };
+
+  var currentWindowOnload = window.onload;
+  window.onload = function() {
+    if (currentWindowOnload) {
+      currentWindowOnload();
+    }
+
+    execJasmine();
+  };
+
+  function execJasmine() {
+    jasmineEnv.execute();
+  }
+})();
+  </script>
+</head>
+<body>
+<div id="container">
+  <div id="background"></div>
+  <div class="banner">
+    <a href="#">Rack AllocationStats</a>
+  </div>
+  <table cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+      <th class="docs">
+        <h1>interactive_spec.js</h1>
+      </th>
+      <th class="code"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="section-1">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        <p>Rack AllocationStats is&hellip;</p>
+      </td>
+      <td class="code">
+        <div class="highlight">
+          <pre></pre>
+        </div>
+      </td>
+    </tr>
+    <tr id="section-abbreviateClass()">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-abbreviateClass()">&#182;</a>
+        </div>
+        <h2>abbreviateClass()</h2>
+
+<p><code>abbreviateClass()</code> is a method that abbreviates the inside namespaces of a
+long Ruby class name. Examples:</p>
+
+<p>Array =&gt; Array
+Arel::Attributes::Attribute =&gt; Arel::&hellip;::Attribute</p>
+
+      </td>
+      <td class="code">
+        <div class="highlight">
+          <pre><span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;abbreviateClass&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;leaves classes with &lt; 3 namespaces alone&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">abbreviateClass</span><span class="p">(</span><span class="s2">&quot;Array&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;Array&quot;</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">abbreviateClass</span><span class="p">(</span><span class="s2">&quot;File::Stat&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;File::Stat&quot;</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;abbreviates classes with &gt; 3 namespaces&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">abbreviateClass</span><span class="p">(</span><span class="s2">&quot;Arel::Attributes::Attribute&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;Arel::&amp;hellip;::Attribute&quot;</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">abbreviateClass</span><span class="p">(</span><span class="s2">&quot;ActionDispatch::Routing::RouteSet::Generator&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;ActionDispatch::&amp;hellip;::Generator&quot;</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;abbreviates subclasses when &gt;= 3 namespaces&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">abbreviateClass</span><span class="p">(</span><span class="s2">&quot;Array&lt;String&gt;&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;Array&lt;String&gt;&quot;</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">abbreviateClass</span><span class="p">(</span><span class="s2">&quot;Array&lt;Fixnum,String&gt;&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;Array&lt;Fixnum,String&gt;&quot;</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">abbreviateClass</span><span class="p">(</span><span class="s2">&quot;Array&lt;Arel::Nodes::Equality&gt;&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;Array&lt;Arel::&amp;hellip;::Equality&gt;&quot;</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;getParameterByName&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;retuns blank if parameter not present&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">location</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">search</span><span class="o">:</span> <span class="s2">&quot;?a=b&quot;</span> <span class="p">};</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getParameterByName</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;retuns parameters by name when one parameter is present&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">location</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">search</span><span class="o">:</span> <span class="s2">&quot;?a=b&quot;</span> <span class="p">};</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getParameterByName</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">);</span>
+
+    <span class="nx">location</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">search</span><span class="o">:</span> <span class="s2">&quot;?a[b]=c&quot;</span> <span class="p">};</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getParameterByName</span><span class="p">(</span><span class="s2">&quot;a[b]&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getParameterByName</span><span class="p">(</span><span class="s2">&quot;a[c]&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getParameterByName</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;retuns parameters by name when multiple parameters are present&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">location</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">search</span><span class="o">:</span> <span class="s2">&quot;?a=b&amp;c=d&quot;</span> <span class="p">};</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getParameterByName</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getParameterByName</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">);</span>
+
+    <span class="nx">location</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">search</span><span class="o">:</span> <span class="s2">&quot;?a[b]=c&amp;a[d]=e&quot;</span> <span class="p">};</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getParameterByName</span><span class="p">(</span><span class="s2">&quot;a[b]&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getParameterByName</span><span class="p">(</span><span class="s2">&quot;a[d]&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;e&quot;</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">getParameterByName</span><span class="p">(</span><span class="s2">&quot;a[e]&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span></pre>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+  <title>Rack AllocationStats - interactive output specs</title>
+  <link href='http://fonts.googleapis.com/css?family=Lora|Istok+Web:700' rel='stylesheet' type='text/css'/>
+  <link rel="stylesheet" href="css/docco.css"/>
+  <link rel="stylesheet" href="css/jasmine_docco-1.3.1.css"/>
+  <link rel="stylesheet" href="js/jasmine.css"/>
+  <script src="js/jasmine.js"></script>
+  <script src="js/jasmine-html.js"></script>
+  <script src="../../lib/rack/allocation_stats/interactive/jquery-2.0.3.min.js"></script>
+  <script src="../../lib/rack/allocation_stats/interactive/underscore-min.js"></script>
+  <script src="../../lib/rack/allocation_stats/interactive/interactive.js"></script>
+  <script src="interactive_spec.js"></script>
+  <script>
+(function() {
+  var jasmineEnv = jasmine.getEnv();
+  jasmineEnv.updateInterval = 250;
+
+  var htmlReporter = new jasmine.HtmlReporter();
+  jasmineEnv.addReporter(htmlReporter);
+
+  jasmineEnv.specFilter = function(spec) {
+    return htmlReporter.specFilter(spec);
+  };
+
+  var currentWindowOnload = window.onload;
+  window.onload = function() {
+    if (currentWindowOnload) {
+      currentWindowOnload();
+    }
+
+    execJasmine();
+  };
+
+  function execJasmine() {
+    jasmineEnv.execute();
+  }
+})();
+  </script>
+</head>
+<body>
+<div id="container">
+  <div id="background"></div>
+  <div class="banner">
+    <a href="#">Rack AllocationStats</a>
+  </div>
+  <table cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+      <th class="docs">
+        <h1>{{ title }}</h1>
+      </th>
+      <th class="code"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#sections}}
+    <tr id="section-{{ section_id }}">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-{{ section_id }}">&#182;</a>
+        </div>
+        {{{ docs }}}
+      </td>
+      <td class="code">
+        <div class="highlight">
+          <pre>{{{ code }}}</pre>
+        </div>
+      </td>
+    </tr>
+    {{/sections}}
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
