@@ -15,5 +15,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "allocation_stats"
+  spec.add_dependency "yajl-ruby"
   spec.add_development_dependency "rspec"
 end
