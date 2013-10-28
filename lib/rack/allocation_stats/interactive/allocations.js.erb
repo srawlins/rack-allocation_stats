@@ -4,3 +4,21 @@
 
 var allocations = <%= Yajl::Encoder.encode(@allocations) %>;
 var pwd = "<%= Dir.pwd %>";
+var classAbbreviations = {};
+
+$(function() {
+  fillClassAbbreviations();
+
+  fillTableWith(
+      _.sortBy(
+          tupleize(_.groupBy(filterAllocationsByControls(), byFileLineAndClassPlus)),
+          valueLength
+      ),
+      ["file", "line", "class+ (abbrev)"]
+  );
+
+  $("#gb-controls input").change(refillTable);
+  $("#filter-controls input").change(refillTable);
+  $("#filter-count").change(refillTable);
+  $("#option-abbreviate-classes").change(refillTable);
+});
