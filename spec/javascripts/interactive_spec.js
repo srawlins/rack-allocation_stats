@@ -30,27 +30,31 @@ describe("abbreviateClass", function() {
 });
 
 describe("getParameterByName", function() {
-  it("retuns blank if parameter not present", function() {
-    var location = { search: "?a=b" };
+  it("returns blank if parameter not present", function() {
+    spyOn(util, "locationSearch").andReturn("?a[b]=c");
     expect(getParameterByName("c")).toBe("");
   });
 
-  it("retuns parameters by name when one parameter is present", function() {
-    var location = { search: "?a=b" };
+  it("returns parameters by name when one parameter is present", function() {
+    spyOn(util, "locationSearch").andReturn("?a=b");
     expect(getParameterByName("a")).toBe("b");
+  });
 
-    location = { search: "?a[b]=c" };
+  it("returns parameters by name when one bracketed parameter is present", function() {
+    spyOn(util, "locationSearch").andReturn("?a[b]=c");
     expect(getParameterByName("a[b]")).toBe("c");
     expect(getParameterByName("a[c]")).toBe("");
     expect(getParameterByName("a")).toBe("");
   });
 
-  it("retuns parameters by name when multiple parameters are present", function() {
-    var location = { search: "?a=b&c=d" };
+  it("returns parameters by name when multiple parameters are present", function() {
+    spyOn(util, "locationSearch").andReturn("?a=b&c=d");
     expect(getParameterByName("a")).toBe("b");
     expect(getParameterByName("c")).toBe("d");
+  });
 
-    location = { search: "?a[b]=c&a[d]=e" };
+  it("returns parameters by name when multiple bracketed parameters are present", function() {
+    spyOn(util, "locationSearch").andReturn("?a[b]=c&a[d]=e");
     expect(getParameterByName("a[b]")).toBe("c");
     expect(getParameterByName("a[d]")).toBe("e");
     expect(getParameterByName("a[e]")).toBe("");
