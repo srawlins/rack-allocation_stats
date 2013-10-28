@@ -19,16 +19,17 @@ body {
   border: solid 1px darken($bg, 26.67%);
   margin: 2px auto 8px;
   width: 800px;
-  padding: 4px 2px;
+  padding: 6px 6px;
 
   section {
     background-color: #F8F8F8;
     border: solid 1px darken($bg, 20%);
     color: #333333;
     border-radius: 4px;
-    display: inline-block;
-    margin: 2px 4px;
-    padding: 2px 4px;
+    //display: inline-block;
+    margin: 2px;
+    padding: 2px 6px;
+    line-height: 1.7;
   }
 
   section:hover {
