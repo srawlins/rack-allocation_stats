@@ -13,7 +13,6 @@ Interactive Mode
 * display all ras[] parameters
   (where? they're all in the location bar for now...)
 * replace <GEMDIR>/gems/activesupport-3.2.15/ with <GEM:activesupport-3.2.15>/
-* filter by PWD stopped working
 * investigate warning about Rails not-production env
 
 Output
