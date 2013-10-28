@@ -12,6 +12,10 @@ Interactive Mode
 * group by custom
 * display all ras[] parameters
   (where? they're all in the location bar for now...)
+* replace <GEMDIR>/gems/activesupport-3.2.15/ with <GEM:activesupport-3.2.15>/
+* add three chars before ellipses in abbreviation
+* fix class_plus in headings
+* filter by PWD stopped working
 
 Output
 ======
