@@ -2,38 +2,75 @@
  * Licensed under the Apache License, Version 2.0, found in the LICENSE file.
  */
 
-var allocations = <%= Yajl::Encoder.encode(@allocations) %>
-var pwd         = "<%= Dir.pwd %>"
+var allocations = <%= Yajl::Encoder.encode(@allocations) %>;
+var pwd = "<%= Dir.pwd %>";
+var classAbbreviations = {};
 
 $(function() {
+  fillClassAbbreviations();
+
   fillTableWith(
-      _.sortBy(tupleize(_.groupBy(filterAllocationsByControls(), byFileLineAndClassPlus)), valueLength),
-      ["file", "line", "class+"]
+      _.sortBy(
+          tupleize(_.groupBy(filterAllocationsByControls(), byFileLineAndClassPlus)),
+          valueLength
+      ),
+      ["file", "line", "class+ (abbrev)"]
   );
 
   $("#gb-controls input").change(refillTable);
   $("#filter-controls input").change(refillTable);
   $("#filter-count").change(refillTable);
+  $("#option-abbreviate-classes").change(refillTable);
 });
 
 function byFileLineAndClassPlus(allocation) {
   return JSON.stringify([allocation["file"], allocation["line"], allocation["class_plus"]]);
 }
 
+function fillClassAbbreviations() {
+  _.each(allocations, function(a) {
+    if (classAbbreviations[a["class_plus"]]) { return; }
+
+    if (a["class_plus"] !== null) {
+      var klass = a["class_plus"],
+          match = /^([^<]+)(<(.+)>)?/.exec(klass),
+          outerAbbreviation = abbreviateClass(match[1]),
+          innerAbbreviations = _.map((match[3] || "").split(/,/), abbreviateClass);
+
+      classAbbreviations[klass] = outerAbbreviation +
+        (match[3] ? "<" + innerAbbreviations.join(",") +  ">" : "");
+    }
+
+    if (classAbbreviations[a["class"]]) { return; }
+    if (a["class"] === null) { return; }
+    classAbbreviations[a["class"]] = abbreviateClass(a["class"]);
+  });
+}
+
+function abbreviateClass(c) {
+  var n = c.split(/::/);
+  if (n.length < 3) { return c; };
+  return n[0] + "::...::" + n[n.length-1];
+}
+
 function fillTableWith(groups, headers) {
   /* table headers */
-  var headTr = $("<tr/>");
-  var fileColonLineIndex = null;
-  var lineIndex = null;
-  var classPathSpaceMethodIdIndex = null;
-  var methodIdIndex = null;
+  var headTr = $("<tr/>"),
+      fileColonLineIndex = null,
+      lineIndex = null,
+      classPathSpaceMethodIdIndex = null,
+      methodIdIndex = null,
+      classAbbreviationIndex = null;
 
   if (groups.length === 0) {
     $("#allocations thead").empty();
     $("#allocations tbody").empty();
     $("#allocations-row-count").text("0 rows");
     if (allocations.length > 0) {
-      $("#allocations-row-count").text("0 rows (all of the original " + allocations.length + " allocations have been filtered out.)");
+      $("#allocations-row-count").text(
+          "0 rows (all of the original " +
+          allocations.length +
+          " allocations have been filtered out.)");
     }
     return;
   }
@@ -59,6 +96,10 @@ function fillTableWith(groups, headers) {
     if (classPathSpaceMethodIdIndex && headers[i] === "method_id") {
       methodIdIndex = i;
       continue;
+    }
+
+    if (headers[i].indexOf(" (abbrev)") >= 0) {
+      classAbbreviationIndex = i;
     }
 
     headTr.append("<th>" + headers[i] + "</th>");
@@ -88,6 +129,8 @@ function fillTableWith(groups, headers) {
         var class_path_html = '<span class="nc">' + keys[i] + '</span>';
         var method_id_html  = '<span class="nf">' + keys[methodIdIndex] + '</span>';
         tr.append($("<td>").html(class_path_html + " " + method_id_html));
+      } else if (i === classAbbreviationIndex) {
+        tr.append($("<td>").text(classAbbreviations[keys[i]]));
       } else {
         tr.append($("<td>").text(keys[i]));
       }
@@ -198,19 +241,26 @@ function minCount(allocations) {
 
 function refillTable(e) {
   // Filter stuff
-  filtered = filterAllocationsByControls();
-
+  var filtered = filterAllocationsByControls(),
   // Group stuff by other stuff
-  var gbInputs = $("#gb-controls").find("input");
+      gbInputs = $("#gb-controls").find("input"),
+      abbreviateClassesInput = $("input#option-abbreviate-classes")[0];
+  headers = new Array();
   fields = new Array();
 
   $.each(gbInputs, function(idx, gbInput) {
     if (gbInput.checked) {
-      fields.push(gbInput.getAttribute("name"));
+      var field = gbInput.getAttribute("name");
+      fields.push(field);
+      if ((field === "class_plus" || field === "class") && abbreviateClassesInput.checked) {
+        headers.push(field + " (abbrev)");
+      } else {
+        headers.push(field);
+      }
     }
   });
 
-  fillTableWith(_.sortBy(tupleize(groupByFields(filtered, fields), minCount), valueLength), fields);
+  fillTableWith(_.sortBy(tupleize(groupByFields(filtered, fields), minCount), valueLength), headers);
 }
 
 function tupleize(object, filter) {
