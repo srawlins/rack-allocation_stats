@@ -13,6 +13,17 @@ Interactive Mode
 * display all ras[] parameters
   (where? they're all in the location bar for now...)
 * replace <GEMDIR>/gems/activesupport-3.2.15/ with <GEM:activesupport-3.2.15>/
+* jasmine specs:
+  * `byFileLineAndClassPlus()`
+  * `fillClassAbbreviations()`
+  * `filterOutPwd()`
+  * `filterOutRuby()`
+  * `filterOutGems()`
+  * `filterOutEval()`
+  * `filterAllocationsByControls()`
+  * `groupByFields()`
+  * `minCount()` ?
+  * `tupleize()`
 
 Output
 ======
