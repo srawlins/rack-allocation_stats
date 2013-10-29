@@ -48,6 +48,14 @@ $(function() {
   <body>
     <main id="everything">
       <h1>Rack::AllocationStats</h1>
+      <% if defined?(Rails) && Rails.env != "production" %>
+        <div class="warning">
+          Warning: This Rails app is running in <strong><%= Rails.env %></strong>
+          mode. You should only run Rack::AllocationStats against a Rails app in
+          <strong>production</strong> mode; the allocations below will be
+          <em>significantly</em> different (fewer).
+        </div>
+      <% end %>
 
       <section id="controls">
         <section id="gb-controls">

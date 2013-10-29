@@ -16,5 +16,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "allocation_stats"
   spec.add_dependency "yajl-ruby"
+  #spec.add_dependency "pry"
   spec.add_development_dependency "rspec"
 end
