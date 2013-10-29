@@ -1,16 +1,16 @@
 #!/bin/bash
-app=`rails -v |tr ' ' _`
+app=`rails _3.2.15_ -v |tr ' ' _`
 
 rm -rf $app
-rails new $app
+rails _3.2.15_ new $app
 cd $app
 
 echo "gem 'allocation_stats', path: '../../../allocation_stats'" >> Gemfile
 echo "gem 'rack-allocation_stats', path: '../../'" >> Gemfile
 bundle
 
-rails generate scaffold Project name:string priority:integer description:text
-rails generate scaffold Task name:string description:text project_id:integer
+bundle exec rails generate scaffold Project name:string priority:integer description:text
+bundle exec rails generate scaffold Task name:string description:text project_id:integer
 
 cat app/models/task.rb |head --lines=-1 > task.rb
 echo "  belongs_to :project" >> task.rb
