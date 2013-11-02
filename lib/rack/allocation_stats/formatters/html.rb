@@ -1,3 +1,6 @@
+# Copyright 2013 Google Inc. All Rights Reserved.
+# Licensed under the Apache License, Version 2.0, found in the LICENSE file.
+
 class Rack::AllocationStats::Formatters::HTML < Rack::AllocationStats::Formatters::Base
   def format
     interactive_dir = File.join(__dir__, "..", "interactive")

@@ -1,3 +1,7 @@
+/* Copyright 2013 Google Inc. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0, found in the LICENSE file.
+ */
+
 /**
  * Rack AllocationStats is...
  */
@@ -36,6 +40,12 @@ describe("abbreviateClass", function() {
   });
 });
 
+/**
+ * ## getParameterByName()
+ *
+ * `getParameterByName()` is a method that grabs a URL parameter from
+ * location.search by name. It's amazing this isn't directly available.
+ */
 describe("getParameterByName", function() {
   it("returns blank if parameter not present", function() {
     spyOn(util, "locationSearch").andReturn("?a[b]=c");
@@ -93,3 +103,8 @@ describe("filterOutRuby", function() {
     expect(filtered).toEqual([a2]);
   });
 });
+
+/**
+ * Copyright 2013 Google Inc. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0, found in the LICENSE file.
+ */

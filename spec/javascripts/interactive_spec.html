@@ -61,6 +61,21 @@
         <div class="pilwrap">
           <a class="pilcrow" href="#section-1">&#182;</a>
         </div>
+        
+      </td>
+      <td class="code">
+        <div class="highlight">
+          <pre><span class="cm">/* Copyright 2013 Google Inc. All Rights Reserved.</span>
+<span class="cm"> * Licensed under the Apache License, Version 2.0, found in the LICENSE file.</span>
+<span class="cm"> */</span></pre>
+        </div>
+      </td>
+    </tr>
+    <tr id="section-2">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
         <p>Rack AllocationStats is&hellip;</p>
       </td>
       <td class="code">
@@ -81,7 +96,6 @@ long Ruby class name. Examples:</p>
 
 <p>Array =&gt; Array
 Arel::Attributes::Attribute =&gt; Arel::&hellip;::Attribute</p>
-
       </td>
       <td class="code">
         <div class="highlight">
@@ -108,9 +122,23 @@ Arel::Attributes::Attribute =&gt; Arel::&hellip;::Attribute</p>
   <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;doesn&#39;t abbreviate when only 3 namespaces and middle has &lt; 5 letters&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="nx">expect</span><span class="p">(</span><span class="nx">abbreviateClass</span><span class="p">(</span><span class="s2">&quot;ActionDispatch::Http::ParameterFilter&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;ActionDispatch::Http::ParameterFilter&quot;</span><span class="p">);</span>
   <span class="p">});</span>
-<span class="p">});</span>
+<span class="p">});</span></pre>
+        </div>
+      </td>
+    </tr>
+    <tr id="section-getParameterByName()">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-getParameterByName()">&#182;</a>
+        </div>
+        <h2>getParameterByName()</h2>
 
-<span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;getParameterByName&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<p><code>getParameterByName()</code> is a method that grabs a URL parameter from
+location.search by name. It&rsquo;s amazing this isn&rsquo;t directly available.</p>
+      </td>
+      <td class="code">
+        <div class="highlight">
+          <pre><span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;getParameterByName&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
   <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;returns blank if parameter not present&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="nx">spyOn</span><span class="p">(</span><span class="nx">util</span><span class="p">,</span> <span class="s2">&quot;locationSearch&quot;</span><span class="p">).</span><span class="nx">andReturn</span><span class="p">(</span><span class="s2">&quot;?a[b]=c&quot;</span><span class="p">);</span>
     <span class="nx">expect</span><span class="p">(</span><span class="nx">getParameterByName</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
@@ -167,6 +195,21 @@ Arel::Attributes::Attribute =&gt; Arel::&hellip;::Attribute</p>
     <span class="nx">expect</span><span class="p">(</span><span class="nx">filtered</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">([</span><span class="nx">a2</span><span class="p">]);</span>
   <span class="p">});</span>
 <span class="p">});</span></pre>
+        </div>
+      </td>
+    </tr>
+    <tr id="section-5">
+      <td class="docs">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
+        </div>
+        <p>Copyright 2013 Google Inc. All Rights Reserved.
+Licensed under the Apache License, Version 2.0, found in the LICENSE file.</p>
+
+      </td>
+      <td class="code">
+        <div class="highlight">
+          <pre></pre>
         </div>
       </td>
     </tr>

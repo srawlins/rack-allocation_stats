@@ -1,3 +1,6 @@
+# Copyright 2013 Google Inc. All Rights Reserved.
+# Licensed under the Apache License, Version 2.0, found in the LICENSE file.
+
 class Rack::AllocationStats::Formatters::Text < Rack::AllocationStats::Formatters::Base
   def format
     file_length = @allocations.inject(0) { |length, allocation| [allocation[0][0].length , length].max }
