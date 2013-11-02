@@ -90,6 +90,10 @@ body {
     color: #000000;
   }
 
+  tbody tr.footer td:not(:last-child) {
+    padding-right: 16px;
+  }
+
   tbody tr.total {
     font-weight: bold;
   }

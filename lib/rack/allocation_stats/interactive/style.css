@@ -62,6 +62,8 @@ body {
 #allocations tbody tr.footer {
   background-color: white;
   color: #000000; }
+#allocations tbody tr.footer td:not(:last-child) {
+  padding-right: 16px; }
 #allocations tbody tr.total {
   font-weight: bold; }
 #allocations tbody tr.total td {
