@@ -67,3 +67,29 @@ describe("getParameterByName", function() {
     expect(getParameterByName("a[e]")).toBe("");
   });
 });
+
+describe("filterOutPwd", function() {
+  it("filters out allocations with a sourcefile in PWD", function() {
+    var a1 = { class: 'Thread::ConditionVariable',
+                 file: '<RUBYLIBDIR>/monitor.rb' },
+        a2 = { class: 'ActionView::CompiledTemplates',
+               file: '<PWD>/app/views/projects/index.html.erb' },
+        allocations = [ a1, a2 ],
+        filtered  = filterOutPwd(allocations);
+
+    expect(filtered).toEqual([a1]);
+  });
+});
+
+describe("filterOutRuby", function() {
+  it("filters out allocations with a sourcefile in RUBYLIBDIR", function() {
+    var a1 = { class: 'Thread::ConditionVariable',
+                 file: '<RUBYLIBDIR>/monitor.rb' },
+        a2 = { class: 'ActionView::CompiledTemplates',
+               file: '<PWD>/app/views/projects/index.html.erb' },
+        allocations = [ a1, a2 ],
+        filtered  = filterOutRuby(allocations);
+
+    expect(filtered).toEqual([a2]);
+  });
+});

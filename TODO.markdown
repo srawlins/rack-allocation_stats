@@ -16,8 +16,6 @@ Interactive Mode
 * jasmine specs:
   * `byFileLineAndClassPlus()`
   * `fillClassAbbreviations()`
-  * `filterOutPwd()`
-  * `filterOutRuby()`
   * `filterOutGems()`
   * `filterOutEval()`
   * `filterAllocationsByControls()`

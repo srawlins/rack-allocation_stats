@@ -140,6 +140,32 @@ Arel::Attributes::Attribute =&gt; Arel::&hellip;::Attribute</p>
     <span class="nx">expect</span><span class="p">(</span><span class="nx">getParameterByName</span><span class="p">(</span><span class="s2">&quot;a[d]&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;e&quot;</span><span class="p">);</span>
     <span class="nx">expect</span><span class="p">(</span><span class="nx">getParameterByName</span><span class="p">(</span><span class="s2">&quot;a[e]&quot;</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
   <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;filterOutPwd&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;filters out allocations with a sourcefile in PWD&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">a1</span> <span class="o">=</span> <span class="p">{</span> <span class="kr">class</span><span class="o">:</span> <span class="s1">&#39;Thread::ConditionVariable&#39;</span><span class="p">,</span>
+                 <span class="nx">file</span><span class="o">:</span> <span class="s1">&#39;&lt;RUBYLIBDIR&gt;/monitor.rb&#39;</span> <span class="p">},</span>
+        <span class="nx">a2</span> <span class="o">=</span> <span class="p">{</span> <span class="kr">class</span><span class="o">:</span> <span class="s1">&#39;ActionView::CompiledTemplates&#39;</span><span class="p">,</span>
+               <span class="nx">file</span><span class="o">:</span> <span class="s1">&#39;&lt;PWD&gt;/app/views/projects/index.html.erb&#39;</span> <span class="p">},</span>
+        <span class="nx">allocations</span> <span class="o">=</span> <span class="p">[</span> <span class="nx">a1</span><span class="p">,</span> <span class="nx">a2</span> <span class="p">],</span>
+        <span class="nx">filtered</span>  <span class="o">=</span> <span class="nx">filterOutPwd</span><span class="p">(</span><span class="nx">allocations</span><span class="p">);</span>
+
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">filtered</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">([</span><span class="nx">a1</span><span class="p">]);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;filterOutRuby&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;filters out allocations with a sourcefile in RUBYLIBDIR&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">a1</span> <span class="o">=</span> <span class="p">{</span> <span class="kr">class</span><span class="o">:</span> <span class="s1">&#39;Thread::ConditionVariable&#39;</span><span class="p">,</span>
+                 <span class="nx">file</span><span class="o">:</span> <span class="s1">&#39;&lt;RUBYLIBDIR&gt;/monitor.rb&#39;</span> <span class="p">},</span>
+        <span class="nx">a2</span> <span class="o">=</span> <span class="p">{</span> <span class="kr">class</span><span class="o">:</span> <span class="s1">&#39;ActionView::CompiledTemplates&#39;</span><span class="p">,</span>
+               <span class="nx">file</span><span class="o">:</span> <span class="s1">&#39;&lt;PWD&gt;/app/views/projects/index.html.erb&#39;</span> <span class="p">},</span>
+        <span class="nx">allocations</span> <span class="o">=</span> <span class="p">[</span> <span class="nx">a1</span><span class="p">,</span> <span class="nx">a2</span> <span class="p">],</span>
+        <span class="nx">filtered</span>  <span class="o">=</span> <span class="nx">filterOutRuby</span><span class="p">(</span><span class="nx">allocations</span><span class="p">);</span>
+
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">filtered</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">([</span><span class="nx">a2</span><span class="p">]);</span>
+  <span class="p">});</span>
 <span class="p">});</span></pre>
         </div>
       </td>
