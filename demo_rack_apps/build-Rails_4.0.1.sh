@@ -9,7 +9,7 @@ echo "gem 'allocation_stats', path: '../../../allocation_stats'" >> Gemfile
 echo "gem 'rack-allocation_stats', path: '../../'" >> Gemfile
 bundle
 
-bundle exec rails generate scaffold Project name:string priority:integer description:text
+bundle exec rails generate scaffold Project name:string description:text priority:integer
 bundle exec rails generate scaffold Task name:string description:text project_id:integer
 
 cat app/models/task.rb |head --lines=-1 > task.rb
@@ -33,9 +33,9 @@ RAILS_ENV=production bundle exec rake db:create db:migrate assets:precompile
 cat > db/seeds.rb <<EOF
 10.times do |i|
   project = Project.create(
-    name: "Project #{i}",
+    name: "Project #{i+1}",
     priority: i**2,
-    description: "Project #{i} has a long description." * 8
+    description: "Project #{i+1} has a long description." * 8
   )
 
   4.times do |j|
@@ -52,6 +52,13 @@ RAILS_ENV=production bundle exec rake db:seed
 
 cat > app/views/projects/index.html.erb <<EOF
 <h1>Projects</h1>
+
+<p>This app has two models. <em>Projects</em> have many <em>tasks</em>.</p>
+
+<ul>
+  <li>Project columns: name:string description:text priority:integer</li>
+  <li>Task columns: name:string description:text project_id:integer</li>
+</ul>
 
 <p>
   This page should render a listing of 10 projects, each of which has 4 tasks.
