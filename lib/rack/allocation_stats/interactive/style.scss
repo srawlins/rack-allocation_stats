@@ -7,6 +7,7 @@ $bg: #FFFFFF;
 body {
   font-family: monospace;
   font-size: 12px;
+  margin: 5px;
 }
 
 #everything {
@@ -56,8 +57,8 @@ body {
 
 #allocations {
   th, td {
-    padding: 1px 4px 1px 20px;
-    text-indent: -16px;
+    padding: 1px 3.5px 1px 20px;
+    text-indent: -16.5px;
   }
 
   thead tr {

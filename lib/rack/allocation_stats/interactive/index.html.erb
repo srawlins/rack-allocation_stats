@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Rack::AllocationStats</title>
+
     <script>
 <%= jquery_min_js %>
     </script>
@@ -76,12 +78,12 @@ $(function() {
             <label for="filter-pwd"><input type="checkbox" id="filter-pwd" name="filter-pwd"></input>project (PWD)</label>
             <label for="filter-eval"><input type="checkbox" id="filter-eval" name="filter-eval" checked="checked"></input>(eval)</label>
           </div>
-          <div>
+          <!--div>
             specific gems:
             <% allocating_gems.each do |allocating_gem| %>
               <%= allocating_gem %>
             <% end %>
-          </div>
+          </div-->
         </section>
 
         <section id="filter-controls">
