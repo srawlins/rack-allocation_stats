@@ -18,4 +18,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "yajl-ruby"
   #spec.add_dependency "pry"
   spec.add_development_dependency "rspec"
+
+  # ">= 2.1.0" seems logical, but rubygems thought that "2.1.0.dev.0" did not fit that bill.
+  # "> 2.0.0" was my next guess, but apparently "2.0.0.247" _does_ fit that bill.
+  spec.required_ruby_version = "> 2.0.99"
 end
