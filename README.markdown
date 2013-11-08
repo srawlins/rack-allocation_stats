@@ -18,7 +18,7 @@ request.
 
 For example, if you have a Rack app that responds to the following request:
 
-```http
+```bash
 http://my.rack.app:9292/path?foo=bar
 ```
 
@@ -65,3 +65,8 @@ In order to reduce the with of the `sourcefile`, you can add
 
 Change the output
 =================
+
+There are several values that you can pass with `ras[output]` parameter:
+
+* `columnar` is the default response output, displaying allocation groups in text columns.
+* `json` will respond with a JSON string representing all of the groups of allocations (by default grouped by sourcefile, sourceline, and object class).
