@@ -24,7 +24,7 @@ http://my.rack.app:9292/path?foo=bar
 
 then you can just add `&ras[trace]=true` to activate Rack AllocationStats:
 
-```http
+```bash
 http://my.rack.app:9292/path?foo=bar&ras[trace]=true
 ```
 
@@ -68,5 +68,10 @@ Change the output
 
 There are several values that you can pass with `ras[output]` parameter:
 
-* `columnar` is the default response output, displaying allocation groups in text columns.
-* `json` will respond with a JSON string representing all of the groups of allocations (by default grouped by sourcefile, sourceline, and object class).
+* `columnar` is the default response output, displaying allocation groups in
+  text columns.
+* `json` will respond with a JSON string representing all of the groups of
+  allocations (by default grouped by sourcefile, sourceline, and object class).
+* `interactive` will respond with a JavaScript application that allows you to
+  interactively tweak how you wish to group, arrange, and filter the traced
+  allocations.
