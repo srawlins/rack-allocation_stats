@@ -3,7 +3,7 @@ Rack AllocationStats is a Rack Middleware, similar in design to
 will show information about object allocations that occurr during an HTTP
 request. The heart of Rack AllocationStats is the
 [AllocationStats](https://github.com/srawlins/allocation_stats) gem. Install
-Rack AllocationStats with Ruby 2.1 and:
+Rack AllocationStats with Ruby 2.1 (newer than preview1) and:
 
 * Bundler: add `gem 'rack-allocation_stats'` to your Gemfile, or
 * RubyGems: run `gem install rack-allocation_stats`
@@ -11,9 +11,13 @@ Rack AllocationStats with Ruby 2.1 and:
 API
 ===
 
-In order to trigger rack-allocation_stats, a parameter must be appended to the
-request URL: `ras[trace]=true` ('ras' for rack-allocation_stats). Alongside
-that, the following parameters are also available:
+In order to trigger Rack AllocationStats, a parameter must be appended to the
+request URL: `ras[trace]=true` ('ras' for Rack AllocationStats). This will
+trace the object allocations that occur inside your Rack app during your
+request. Instead of the normal response that your app generates, Rack
+AllocationStats will respond with a tabular listing of allocation statistics.
+There are additional paramters that you can attach to the request URL to change
+the response:
 
 Limit the file system scope
 ---------------------------
