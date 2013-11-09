@@ -94,3 +94,11 @@ There are several values that you can pass with `ras[output]` parameter:
 * `interactive` will respond with a JavaScript application that allows you to
   interactively tweak how you wish to group, arrange, and filter the traced
   allocations.
+
+Request multiple times
+======================
+
+If your Rack application appears to have some variability, you can use
+`ras[times]=N` to pass the request onto your Rack application `N` times. The
+response that Rack AllocationStats generates will contain all of the requests
+that occurred over the `N` requests.
