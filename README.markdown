@@ -8,6 +8,22 @@ Rack AllocationStats with Ruby 2.1 (newer than preview1) and:
 * Bundler: add `gem 'rack-allocation_stats'` to your Gemfile, or
 * RubyGems: run `gem install rack-allocation_stats`
 
+Rack AllocationStats must also be included in your Rack application's middleware:
+
+Rails:
+
+```ruby
+# in your config/application.rb
+config.middleware.use ::Rack::AllocationStats
+```
+
+Other Rack apps:
+
+```ruby
+# in your rackup file
+use Rack::AllocationStats
+```
+
 Summary
 =======
 
