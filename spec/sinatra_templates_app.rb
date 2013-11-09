@@ -8,7 +8,7 @@ require "redcarpet"
 require "slim"
 
 class SinatraTemplatesApp < Sinatra::Base
-  HELLOS = ["Hello", "Hola", "Bonjour", "Gutentag",
+  HELLOS = ["Hello", "Hola", "Bonjour", "Guten Tag",
             "こんにちは", "привет"]
 
   enable :inline_templates

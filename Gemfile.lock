@@ -9,7 +9,7 @@ GIT
 PATH
   remote: ../allocation_stats
   specs:
-    allocation_stats (0.1.0)
+    allocation_stats (0.1.2)
 
 GEM
   remote: https://rubygems.org/
