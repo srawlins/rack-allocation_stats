@@ -30,6 +30,9 @@ http://my.rack.app:9292/path?foo=bar&ras[trace]=true
 
 Instead of the normal response that your app generates, Rack
 AllocationStats will respond with a tabular listing of allocation statistics.
+
+![Demonstration](basic-screen.gif)
+
 There are additional paramters that you can attach to the request URL to change
 the response:
 
