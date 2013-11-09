@@ -52,6 +52,13 @@ AllocationStats will respond with a tabular listing of allocation statistics.
 There are additional paramters that you can attach to the request URL to change
 the response:
 
+Help text
+=========
+
+To see some help text on what options are available, use `ras[trace]=true`, and
+also add `ras[help]`. Rack AllocationStats will respond with man page-style
+help text.
+
 Limit the file system scope
 ===========================
 
