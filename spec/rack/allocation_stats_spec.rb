@@ -35,7 +35,7 @@ describe Rack::AllocationStats do
     _, _, body = Rack::AllocationStats.new(@app).call(@traced_request_env)
 
     expected_body = [
-      "#{HelloWorldApp::FULL_PATH}:#{@app.allocating_lines[1]}  allocated    4 `String`\n",
+      "#{HelloWorldApp::FULL_PATH}:#{@app.allocating_lines[1]}  allocated    2 `String`\n",
       "#{HelloWorldApp::FULL_PATH}:#{@app.allocating_lines[1]}  allocated    1 `Array<String>`\n",
       "#{HelloWorldApp::FULL_PATH}:#{@app.allocating_lines[1]}  allocated    1 `Array<Fixnum,Hash,Array>`\n",
       "#{HelloWorldApp::FULL_PATH}:#{@app.allocating_lines[1]}  allocated    1 `Hash`\n",
@@ -54,7 +54,7 @@ describe Rack::AllocationStats do
     _, _, body = Rack::AllocationStats.new(@app).call(request_env)
 
     expected_body = [
-      "<PWD>/spec/hello_world_app.rb:#{@app.allocating_lines[1]}  allocated    4 `String`\n",
+      "<PWD>/spec/hello_world_app.rb:#{@app.allocating_lines[1]}  allocated    2 `String`\n",
       "<PWD>/spec/hello_world_app.rb:#{@app.allocating_lines[1]}  allocated    1 `Array<String>`\n",
       "<PWD>/spec/hello_world_app.rb:#{@app.allocating_lines[1]}  allocated    1 `Array<Fixnum,Hash,Array>`\n",
       "<PWD>/spec/hello_world_app.rb:#{@app.allocating_lines[1]}  allocated    1 `Hash`\n",
@@ -73,7 +73,7 @@ describe Rack::AllocationStats do
     _, _, body = Rack::AllocationStats.new(@app).call(request_env)
 
     expected_body = [
-      "#{HelloWorldApp::FULL_PATH}:#{@app.allocating_lines[1]}  allocated   16 `String`\n",
+      "#{HelloWorldApp::FULL_PATH}:#{@app.allocating_lines[1]}  allocated    8 `String`\n",
       "#{HelloWorldApp::FULL_PATH}:#{@app.allocating_lines[1]}  allocated    4 `Array<String>`\n",
       "#{HelloWorldApp::FULL_PATH}:#{@app.allocating_lines[1]}  allocated    4 `Array<Fixnum,Hash,Array>`\n",
       "#{HelloWorldApp::FULL_PATH}:#{@app.allocating_lines[1]}  allocated    4 `Hash`\n",
@@ -109,7 +109,7 @@ describe Rack::AllocationStats do
     psych_request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[scope]=psych")
     _, _, body = Rack::AllocationStats.new(yaml_app).call(psych_request_env)
 
-    expect(body.size).to eq 44
+    expect(body.size).to eq 42
   end
 
   it "returns HTML5 in response to an interactive request" do
