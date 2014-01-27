@@ -15,6 +15,7 @@ group :development do
 end
 
 group :test do
+  gem "rake"
   gem "rspec"
   gem "factory_girl"
 

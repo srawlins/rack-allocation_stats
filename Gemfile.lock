@@ -36,6 +36,7 @@ GEM
     rack (1.5.2)
     rack-protection (1.2.0)
       rack
+    rake (10.1.0)
     redcarpet (1.17.2)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
@@ -71,6 +72,7 @@ DEPENDENCIES
   liquid
   pry
   rack
+  rake
   rocco!
   rspec
   sass
