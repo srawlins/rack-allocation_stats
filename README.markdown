@@ -1,3 +1,6 @@
+Rack AllocationStats [![Build Status](https://travis-ci.org/srawlins/rack-allocation_stats.png?branch=master)](https://travis-ci.org/srawlins/rack-allocation_stats)
+====================
+
 Rack AllocationStats is a Rack Middleware, similar in design to
 [rack-perftools_profiler](https://github.com/bhb/rack-perftools_profiler), that
 will show information about object allocations that occurr during an HTTP

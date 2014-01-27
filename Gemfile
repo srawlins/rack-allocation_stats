@@ -3,7 +3,8 @@
 
 source "https://rubygems.org"
 
-gem "allocation_stats", path: "../allocation_stats"
+gem "allocation_stats"
+# gem "allocation_stats", path: "../allocation_stats" # when local allocation_stats is needed
 gem "rack"
 gem "yajl-ruby", "= 1.1.0"
 gem "sass"
