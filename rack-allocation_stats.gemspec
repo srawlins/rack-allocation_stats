@@ -10,8 +10,7 @@ Gem::Specification.new do |spec|
   spec.summary       = "Rack middleware for tracing object allocations in Ruby 2.1"
   spec.description   = "Rack middleware for tracing object allocations in Ruby 2.1"
 
-  #spec.files         = `git ls-files`.split("\n")
-  spec.files         = `find . -path "*.rb"`.split("\n")
+  spec.files         = Dir.glob('{lib,spec}/**/*') + %w[LICENSE README.markdown TODO.markdown]
   spec.require_paths = ["lib"]
 
   spec.add_dependency "allocation_stats"
