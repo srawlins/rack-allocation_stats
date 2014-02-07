@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
                          %w[CHANGELOG.markdown LICENSE README.markdown TODO.markdown]
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "allocation_stats", "0.1.3"
+  spec.add_dependency "allocation_stats", "0.1.4"
   spec.add_dependency "yajl-ruby"
   spec.add_development_dependency "rspec", "< 3"
 
