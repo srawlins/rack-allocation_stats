@@ -9,16 +9,17 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/srawlins/rack-allocation_stats"
   spec.license       = "Apache v2"
   spec.summary       = "Rack middleware for tracing object allocations in Ruby 2.1"
-  spec.description   = "Rack middleware for tracing object allocations in Ruby 2.1"
+  spec.description   = "Rack middleware for tracing object allocations in Ruby 2.1; " +
+                       "aggregate allocation information per Rack request; group, " +
+                       "sort, and filter allocation information"
 
   spec.files         = Dir.glob("{lib,spec}/**/*") +
 	                 %w[CHANGELOG.markdown LICENSE README.markdown TODO.markdown]
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "allocation_stats"
+  spec.add_dependency "allocation_stats", "0.1.3"
   spec.add_dependency "yajl-ruby"
-  #spec.add_dependency "pry"
-  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "rspec", "< 3"
 
   # ">= 2.1.0" seems logical, but rubygems thought that "2.1.0.dev.0" did not fit that bill.
   # "> 2.0.0" was my next guess, but apparently "2.0.0.247" _does_ fit that bill.

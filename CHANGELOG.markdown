@@ -4,7 +4,7 @@ v0.1.2
 
 v0.1.1
 
-* I cannot remember :/
+* bump AllocationStats version required
 
 v0.1.0
 
