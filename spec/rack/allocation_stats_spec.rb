@@ -92,16 +92,15 @@ describe Rack::AllocationStats do
     request_env  = Rack::MockRequest.env_for("/", :params => "ras[trace]=true&ras[scope]=.")
     _, _, body = Rack::AllocationStats.new(yaml_app).call(request_env)
 
-    # should be:
-    # yaml_app.rb:15  allocated    4 `String`
-    # yaml_app.rb:14  allocated    2 `String`
-    # yaml_app.rb:14  allocated    1 `Array<>`
-    # yaml_app.rb:14  allocated    1 `Array<String>`
-    # yaml_app.rb:15  allocated    1 `Array<Fixnum,Hash,Array>`
-    # yaml_app.rb:15  allocated    1 `Array<String>`
-    # yaml_app.rb:15  allocated    1 `Hash`
+    # body should be:
+    # yaml_app.rb:17  allocated    2 `String`
+    # yaml_app.rb:18  allocated    2 `String`
+    # yaml_app.rb:18  allocated    1 `Array<String>`
+    # yaml_app.rb:18  allocated    1 `Array<Fixnum,Hash,Array>`
+    # yaml_app.rb:17  allocated    1 `Array<String>`
+    # yaml_app.rb:18  allocated    1 `Hash`
 
-    expect(body.size).to eq 7
+    expect(body.size).to eq 6
   end
 
   it "returns the correct body when called on a specific directory" do
