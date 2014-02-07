@@ -3,7 +3,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = "rack-allocation_stats"
-  spec.version       = "0.1.0"
+  spec.version       = "0.1.2"
   spec.authors       = ["Sam Rawlins"]
   spec.email         = ["sam.rawlins@gmail.com"]
   spec.homepage      = "https://github.com/srawlins/rack-allocation_stats"
@@ -11,8 +11,8 @@ Gem::Specification.new do |spec|
   spec.summary       = "Rack middleware for tracing object allocations in Ruby 2.1"
   spec.description   = "Rack middleware for tracing object allocations in Ruby 2.1"
 
-  #spec.files         = `git ls-files`.split("\n")
-  spec.files         = `find . -path "*.rb"`.split("\n")
+  spec.files         = Dir.glob("{lib,spec}/**/*") +
+	                 %w[CHANGELOG.markdown LICENSE README.markdown TODO.markdown]
   spec.require_paths = ["lib"]
 
   spec.add_dependency "allocation_stats"
