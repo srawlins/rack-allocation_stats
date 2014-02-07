@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
                        "sort, and filter allocation information"
 
   spec.files         = Dir.glob("{lib,spec}/**/*") +
-	                 %w[CHANGELOG.markdown LICENSE README.markdown TODO.markdown]
+                         %w[CHANGELOG.markdown LICENSE README.markdown TODO.markdown]
   spec.require_paths = ["lib"]
 
   spec.add_dependency "allocation_stats", "0.1.3"
